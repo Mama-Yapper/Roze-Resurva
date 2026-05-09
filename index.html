@@ -125,6 +125,7 @@
       opacity: 1;
     }
 
+    /* Map transition effects */
     .map-container iframe {
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       filter: grayscale(100%) invert(90%) contrast(1.2); 
@@ -187,7 +188,6 @@
 </head>
 <body class="antialiased">
 
-  <!-- Minimalist Nav -->
   <nav class="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-[#1E1E1E]">
     <div class="max-w-[95%] mx-auto px-6 py-5 flex justify-between items-center">
       <a href="#" class="flex flex-col">
@@ -213,7 +213,6 @@
     </div>
   </nav>
 
-  <!-- Brutalist Hero Section -->
   <header class="min-h-screen flex flex-col justify-center relative px-6 pt-20">
     <div class="max-w-[95%] mx-auto w-full z-10">
       
@@ -241,7 +240,6 @@
           </div>
         </div>
 
-        <!-- Hero Image -->
         <div class="lg:col-span-5 image-mask reveal-up hidden lg:block rounded-md" style="transition-delay: 0.2s;">
           <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Roze Barbershop Interior" class="w-full h-[700px] object-cover">
           <div class="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none"></div>
@@ -251,7 +249,6 @@
     </div>
   </header>
 
-  <!-- Philosophy Section -->
   <section id="philosophy" class="py-32 px-6 bg-[#0A0A0A]">
     <div class="max-w-4xl mx-auto text-center reveal-up">
       <h2 class="text-3xl md:text-5xl font-light leading-snug">
@@ -261,7 +258,6 @@
     </div>
   </section>
 
-  <!-- Seamless Infinite Marquee -->
   <div class="marquee">
     <div class="marquee-track">
       <span class="marquee-item">Fades <span class="editorial-italic text-[#555] ml-8">—</span></span>
@@ -277,7 +273,6 @@
     </div>
   </div>
 
-  <!-- Services & Pricing Menu -->
   <section id="services" class="py-32 px-6">
     <div class="max-w-[95%] lg:max-w-6xl mx-auto">
       
@@ -336,7 +331,6 @@
     </div>
   </section>
 
-  <!-- Social Feed / Instagram Integration -->
   <section id="social" class="py-32 px-6 border-t border-[#1E1E1E] bg-[#050505]">
     <div class="max-w-[95%] lg:max-w-6xl mx-auto">
       
@@ -351,7 +345,6 @@
         </a>
       </div>
 
-      <!-- Instagram Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal-up" style="transition-delay: 0.1s;">
         
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post rounded-sm">
@@ -393,7 +386,6 @@
     </div>
   </section>
 
-  <!-- Interactive Map & Location Section -->
   <section id="location" class="py-32 px-6 bg-[#080808] border-t border-[#1E1E1E]">
     <div class="max-w-[95%] lg:max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
@@ -408,16 +400,18 @@
           <p>4629 Ch. du Souvenir<br>Laval, QC H7W 1C5</p>
         </div>
 
-        <a href="https://www.google.com/maps/place/4629+Ch+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="btn-outline px-8 py-4 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-sm">
+        <a href="https://maps.google.com/?q=4629+Chem.+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="btn-outline px-8 py-4 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-sm">
           Open in Native Maps ↗
         </a>
       </div>
 
       <div class="reveal-up" style="transition-delay: 0.2s;">
         <div class="map-container p-3 border border-[#1E1E1E] bg-[#0A0A0A] rounded-2xl relative group shadow-2xl">
-           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2792.203258509062!2d-73.76677462332616!3d45.52562473210355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc9231f24ba22c9%3A0xc3af8cfb3956f7a6!2s4629%2Ch%20Du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1714000000000!5m2!1sen!2sca" 
+           
+           <iframe src="https://maps.google.com/maps?q=4629%20Chem.%20du%20Souvenir,%20Laval,%20QC%20H7W%201C5&t=&z=15&ie=UTF8&iwloc=&output=embed" 
              width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
            </iframe>
+           
            <div class="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl"></div>
            
            <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-[#333] opacity-100 transition-opacity duration-500 group-hover:opacity-0">
@@ -429,7 +423,6 @@
     </div>
   </section>
 
-  <!-- Hours Footer -->
   <footer class="bg-[#030303] pt-24 pb-10 px-6 border-t border-[#1E1E1E]">
     <div class="max-w-[95%] mx-auto grid md:grid-cols-2 gap-16 mb-24 reveal-up">
       
