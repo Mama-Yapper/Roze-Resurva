@@ -1,139 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studio Booking | Premium Experience</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .bento-item { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .bento-item:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.3); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NETSites | Bespoke Digital Architecture</title>
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⬛</text></svg>">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- High-End Editorial Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --black: #070707;
+      --white: #F5F5F7;
+      --grey: #8A8A8A;
+      --dark-grey: #1A1A1A;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    
+    /* Massive, striking display typography */
+    h1, h2, .display-font {
+      font-family: 'Syne', sans-serif;
+    }
+
+    /* Elegant, expensive-looking italics */
+    .editorial-italic {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    ::selection {
+      background-color: var(--white);
+      color: var(--black);
+    }
+
+    /* Transparent Outline Text (Very high-end trend) */
+    .text-outline {
+      color: transparent;
+      -webkit-text-stroke: 1px var(--white);
+      transition: color 0.5s ease;
+    }
+    .text-outline:hover {
+      color: var(--white);
+    }
+
+    /* Premium Image Reveal Effects */
+    .image-mask {
+      overflow: hidden;
+      position: relative;
+    }
+    .image-mask img {
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 1.2s ease;
+      filter: grayscale(100%);
+    }
+    .image-mask:hover img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+
+    /* Custom Navigation Hover */
+    .nav-link {
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 2px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--white);
+      transform: translateX(-101%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link:hover::after {
+      transform: translateX(0);
+    }
+
+    /* Brutalist Large List Styling */
+    .service-row {
+      border-top: 1px solid #333;
+      transition: all 0.4s ease;
+    }
+    .service-row:hover {
+      background-color: var(--white);
+      color: var(--black);
+      padding-left: 2rem;
+    }
+    .service-row:hover .service-number {
+      color: var(--black);
+    }
+
+    /* Flawless Infinite Marquee - Giant Outline Style */
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      padding: 4rem 0;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+    }
+    .marquee-track {
+      display: flex;
+      flex-shrink: 0;
+      animation: seamlessScroll 25s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Syne', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding-right: 4rem;
+      display: flex;
+      align-items: center;
+      color: transparent;
+      -webkit-text-stroke: 1px #555;
+    }
+    @keyframes seamlessScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Buttery Smooth Scroll Reveals */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-up.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body x-data="bookingSystem()">
+<body class="antialiased">
 
-    <div class="max-w-6xl mx-auto px-6 py-12">
-        <!-- Header -->
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl font-extrabold tracking-tighter uppercase mb-2">The Studio</h1>
-            <p class="text-gray-400">Select your experience and reserve your session.</p>
-        </header>
-
-        <!-- Main Bento Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Step 1: Service Selection (Large Tile) -->
-            <div class="md:col-span-2 glass rounded-3xl p-8 bento-item">
-                <h2 class="text-xl font-semibold mb-6 flex items-center">
-                    <span class="bg-white text-black w-6 h-6 rounded-full text-xs flex items-center justify-center mr-3">01</span>
-                    Choose Service
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <template x-for="service in services" :key="service.id">
-                        <button 
-                            @click="selectedService = service"
-                            :class="selectedService?.id === service.id ? 'bg-white text-black' : 'glass text-white'"
-                            class="p-6 rounded-2xl text-left transition-all duration-300">
-                            <div class="font-bold text-lg" x-text="service.name"></div>
-                            <div class="text-sm opacity-70" x-text="service.duration + ' • ' + service.price"></div>
-                        </button>
-                    </template>
-                </div>
-            </div>
-
-            <!-- Step 2: Professional (Small Tile) -->
-            <div class="glass rounded-3xl p-8 bento-item">
-                <h2 class="text-xl font-semibold mb-6 flex items-center">
-                    <span class="bg-white text-black w-6 h-6 rounded-full text-xs flex items-center justify-center mr-3">02</span>
-                    Expert
-                </h2>
-                <div class="space-y-4">
-                    <template x-for="pro in professionals" :key="pro.name">
-                        <div 
-                            @click="selectedPro = pro"
-                            class="flex items-center p-3 rounded-xl cursor-pointer transition-all"
-                            :class="selectedPro?.name === pro.name ? 'bg-white/10 ring-1 ring-white' : 'opacity-50 hover:opacity-100'">
-                            <img :src="pro.img" class="w-12 h-12 rounded-full mr-4 object-cover border border-white/20">
-                            <div>
-                                <div class="font-semibold text-sm" x-text="pro.name"></div>
-                                <div class="text-xs text-gray-400" x-text="pro.role"></div>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-            </div>
-
-            <!-- Step 3: Availability (Medium Tile) -->
-            <div class="md:col-span-1 glass rounded-3xl p-8 bento-item">
-                <h2 class="text-xl font-semibold mb-6 flex items-center">
-                    <span class="bg-white text-black w-6 h-6 rounded-full text-xs flex items-center justify-center mr-3">03</span>
-                    Schedule
-                </h2>
-                <div x-show="!selectedService" class="text-gray-500 text-sm italic">Please select a service first...</div>
-                <div x-show="selectedService" class="grid grid-cols-3 gap-2">
-                    <template x-for="time in timeSlots" :key="time">
-                        <button 
-                            @click="selectedTime = time"
-                            :class="selectedTime === time ? 'bg-emerald-500 text-white' : 'bg-white/5 hover:bg-white/20'"
-                            class="py-2 rounded-lg text-xs font-medium transition-all" 
-                            x-text="time">
-                        </button>
-                    </template>
-                </div>
-            </div>
-
-            <!-- Summary & Confirm (Final Tile) -->
-            <div class="md:col-span-2 glass rounded-3xl p-8 bento-item flex flex-col justify-between overflow-hidden relative">
-                <div>
-                    <h2 class="text-xl font-semibold mb-2">Review Reservation</h2>
-                    <p class="text-sm text-gray-400 mb-6">Confirm your details below to finalize.</p>
-                    
-                    <div class="space-y-2 text-lg">
-                        <div x-show="selectedService">✨ <span x-text="selectedService?.name"></span></div>
-                        <div x-show="selectedPro">👤 with <span x-text="selectedPro?.name"></span></div>
-                        <div x-show="selectedTime">⏰ scheduled for <span x-text="selectedTime"></span></div>
-                    </div>
-                </div>
-
-                <button 
-                    x-show="selectedService && selectedPro && selectedTime"
-                    @click="confirmBooking()"
-                    class="mt-8 w-full bg-white text-black font-bold py-4 rounded-2xl hover:bg-emerald-400 transition-colors uppercase tracking-widest">
-                    Confirm Booking
-                </button>
-                
-                <!-- Background Accent -->
-                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-emerald-500/10 blur-3xl rounded-full"></div>
-            </div>
-        </div>
+  <!-- Minimalist, Borderless Nav -->
+  <nav class="fixed w-full top-0 z-50 mix-blend-difference px-6 py-8">
+    <div class="max-w-[95%] mx-auto flex justify-between items-center">
+      <a href="#" class="display-font text-2xl font-bold tracking-tighter uppercase">
+        NETSites
+      </a>
+      <div class="hidden md:flex gap-10 text-xs font-medium uppercase tracking-[0.15em]">
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#services" class="nav-link">Expertise</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
     </div>
+  </nav>
 
-    <script>
-        function bookingSystem() {
-            return {
-                selectedService: null,
-                selectedPro: null,
-                selectedTime: null,
-                services: [
-                    { id: 1, name: 'Premium Cut & Style', duration: '45 min', price: '$45' },
-                    { id: 2, name: 'Luxury Beard Grooming', duration: '30 min', price: '$30' },
-                    { id: 3, name: 'The Full Treatment', duration: '75 min', price: '$70' },
-                    { id: 4, name: 'Quick Refresh', duration: '20 min', price: '$20' }
-                ],
-                professionals: [
-                    { name: 'Alex Rivera', role: 'Master Barber', img: 'https://i.pravatar.cc/150?u=alex' },
-                    { name: 'Jordan Smith', role: 'Stylist', img: 'https://i.pravatar.cc/150?u=jordan' }
-                ],
-                timeSlots: ['09:00', '10:30', '11:45', '13:00', '14:15', '15:30', '16:45', '18:00', '19:15'],
-                confirmBooking() {
-                    alert(`Booking Confirmed!\n${this.selectedService.name} with ${this.selectedPro.name} at ${this.selectedTime}.`);
-                }
-            }
+  <!-- Brutalist Hero Section -->
+  <header class="min-h-screen flex flex-col justify-end pb-20 px-6 pt-40">
+    <div class="max-w-[95%] mx-auto w-full">
+      <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-8 reveal-up">Digital Architecture Studio</p>
+      
+      <h1 class="display-font text-[12vw] leading-[0.85] font-bold uppercase tracking-tighter reveal-up" style="transition-delay: 0.1s;">
+        We build <br>
+        <span class="text-outline">Authority.</span>
+      </h1>
+      
+      <div class="grid md:grid-cols-12 gap-8 mt-16 reveal-up" style="transition-delay: 0.2s;">
+        <div class="md:col-span-5 md:col-start-8">
+          <p class="text-lg md:text-xl font-light leading-relaxed text-[#D0D0D0]">
+            Stop losing premium clients to a cheap digital presence. We hand-code bespoke, lightning-fast web experiences for businesses that refuse to blend in.
+          </p>
+          <a href="#contact" class="inline-block mt-8 text-sm uppercase tracking-[0.1em] border-b border-white pb-1 hover:text-[#8A8A8A] hover:border-[#8A8A8A] transition-all">
+            Initiate Project ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Case Study: Roze Barbershop -->
+  <section id="work" class="py-32 px-6 border-t border-[#1A1A1A]">
+    <div class="max-w-[95%] mx-auto">
+      
+      <div class="flex justify-between items-end mb-16 reveal-up">
+        <h2 class="display-font text-4xl uppercase font-bold tracking-tighter">Featured Case</h2>
+        <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A]">001 / Ongoing</p>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-16 items-center">
+        <!-- Text Side -->
+        <div class="lg:col-span-5 reveal-up">
+          <h3 class="text-6xl lg:text-7xl editorial-italic mb-6">Roze Barbershop</h3>
+          <p class="text-[#8A8A8A] text-sm uppercase tracking-[0.1em] mb-10">Industry: Premium Grooming</p>
+          
+          <div class="space-y-6 font-light leading-relaxed text-[#D0D0D0]">
+            <p>
+              <strong class="text-white font-medium">The Problem:</strong> Roze provides precision grooming and an elite atmosphere, but their digital footprint was reduced to a generic Resurva booking link. It functioned, but it lacked soul, brand authority, and aesthetic value.
+            </p>
+            <p>
+              <strong class="text-white font-medium">The NETSites Solution:</strong> High-end cuts deserve high-end code. We are engineering a bespoke digital flagship for Roze. By wrapping their booking system in a cinematic, lightning-fast website, we align their online presence with the physical luxury of their shop.
+            </p>
+          </div>
+
+          <div class="mt-10 flex gap-6">
+            <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase tracking-[0.1em] border border-[#333] px-6 py-3 rounded-full hover:bg-white hover:text-black transition-colors">
+              View Current Setup
+            </a>
+          </div>
+        </div>
+
+        <!-- Image Side (Overlapping & Asymmetrical) -->
+        <div class="lg:col-span-7 image-mask reveal-up" style="transition-delay: 0.15s;">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1200&q=80" alt="Premium Barbershop Interior" class="w-full h-[600px] lg:h-[800px] object-cover">
+          <div class="absolute bottom-6 right-6 bg-black/80 backdrop-blur text-xs uppercase tracking-[0.1em] px-4 py-2 border border-[#333]">
+            Digital Transformation
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Giant Outline Marquee -->
+  <div class="marquee mt-10">
+    <div class="marquee-track">
+      <span class="marquee-item">Bespoke Design <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">Flawless Code <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">Absolute Speed <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">SEO Dominance <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+    </div>
+    <div class="marquee-track" aria-hidden="true">
+      <span class="marquee-item">Bespoke Design <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">Flawless Code <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">Absolute Speed <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+      <span class="marquee-item">SEO Dominance <span class="editorial-italic text-white ml-8" style="-webkit-text-stroke: 0px;">—</span></span>
+    </div>
+  </div>
+
+  <!-- Brutalist Services List -->
+  <section id="services" class="py-32 px-6">
+    <div class="max-w-[95%] mx-auto">
+      
+      <div class="mb-20 reveal-up">
+        <h2 class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-4">Our Expertise</h2>
+        <p class="display-font text-4xl lg:text-5xl uppercase font-bold tracking-tighter max-w-3xl">
+          We strip away the unnecessary and build what performs.
+        </p>
+      </div>
+
+      <div class="w-full">
+        <!-- Row 1 -->
+        <div class="service-row py-10 flex flex-col md:flex-row items-baseline justify-between reveal-up cursor-pointer">
+          <div class="flex items-baseline gap-8 mb-4 md:mb-0">
+            <span class="service-number text-xs font-mono text-[#555] transition-colors">01</span>
+            <h3 class="display-font text-3xl md:text-5xl uppercase font-bold tracking-tighter">Architecture</h3>
+          </div>
+          <p class="md:w-1/3 text-sm font-light leading-relaxed opacity-80">
+            Raw HTML, CSS, JS, and Tailwind. We don't use clunky page builders. We engineer your site from the ground up for maximum speed and Google Lighthouse scores.
+          </p>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="service-row py-10 flex flex-col md:flex-row items-baseline justify-between reveal-up cursor-pointer">
+          <div class="flex items-baseline gap-8 mb-4 md:mb-0">
+            <span class="service-number text-xs font-mono text-[#555] transition-colors">02</span>
+            <h3 class="display-font text-3xl md:text-5xl uppercase font-bold tracking-tighter">Art Direction</h3>
+          </div>
+          <p class="md:w-1/3 text-sm font-light leading-relaxed opacity-80">
+            Aesthetic is authority. We completely overhaul your visual identity, typography, and layout to position you as the undeniable premium option in your market.
+          </p>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="service-row py-10 flex flex-col md:flex-row items-baseline justify-between reveal-up border-b border-[#333] cursor-pointer">
+          <div class="flex items-baseline gap-8 mb-4 md:mb-0">
+            <span class="service-number text-xs font-mono text-[#555] transition-colors">03</span>
+            <h3 class="display-font text-3xl md:text-5xl uppercase font-bold tracking-tighter">Conversion</h3>
+          </div>
+          <p class="md:w-1/3 text-sm font-light leading-relaxed opacity-80">
+            Traffic means nothing without action. We design user-journeys that subconsciously guide visitors toward booking, buying, or calling.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Editorial Contact Section -->
+  <section id="contact" class="py-32 px-6 bg-white text-black">
+    <div class="max-w-[95%] mx-auto grid lg:grid-cols-2 gap-20">
+      
+      <div class="reveal-up">
+        <h2 class="display-font text-[8vw] lg:text-[6vw] font-bold uppercase tracking-tighter leading-[0.9] mb-8">
+          Start <br> <span class="editorial-italic text-[#555]">the shift.</span>
+        </h2>
+        <p class="text-xl font-light mb-12 max-w-md">
+          Ready to graduate from basic templates? Tell us about your business and we will architect a solution.
+        </p>
+
+        <div class="space-y-8 text-sm uppercase tracking-[0.1em]">
+          <div>
+            <p class="text-[#8A8A8A] text-xs mb-2">Direct Inquiry</p>
+            <a href="mailto:hello@netsites.agency" class="text-xl font-bold border-b border-black pb-1 hover:text-[#555] transition-colors">hello@netsites.agency</a>
+          </div>
+          <div>
+            <p class="text-[#8A8A8A] text-xs mb-2">Socials</p>
+            <div class="flex gap-6 font-bold">
+              <a href="#" class="hover:text-[#555] transition-colors">Instagram</a>
+              <a href="#" class="hover:text-[#555] transition-colors">Twitter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-up" style="transition-delay: 0.15s;">
+        <form class="space-y-12">
+          <div class="relative">
+            <input type="text" placeholder="Your Name" class="w-full bg-transparent border-b border-[#D0D0D0] py-4 text-xl focus:outline-none focus:border-black transition-colors placeholder-[#A0A0A0]">
+          </div>
+          <div class="relative">
+            <input type="email" placeholder="Email Address" class="w-full bg-transparent border-b border-[#D0D0D0] py-4 text-xl focus:outline-none focus:border-black transition-colors placeholder-[#A0A0A0]">
+          </div>
+          <div class="relative">
+            <input type="text" placeholder="Current Website (If applicable)" class="w-full bg-transparent border-b border-[#D0D0D0] py-4 text-xl focus:outline-none focus:border-black transition-colors placeholder-[#A0A0A0]">
+          </div>
+          <div class="relative">
+            <textarea rows="3" placeholder="Tell us about the project..." class="w-full bg-transparent border-b border-[#D0D0D0] py-4 text-xl focus:outline-none focus:border-black transition-colors placeholder-[#A0A0A0] resize-none"></textarea>
+          </div>
+          
+          <button type="button" class="w-full bg-black text-white text-sm uppercase tracking-[0.15em] font-bold py-6 hover:bg-[#222] transition-colors">
+            Submit Request
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Giant Typographic Footer -->
+  <footer class="bg-black pt-32 pb-10 px-6 overflow-hidden">
+    <div class="max-w-[95%] mx-auto">
+      <h2 class="display-font text-[18vw] font-bold text-center tracking-tighter leading-none mb-10 text-outline reveal-up">
+        NETSITES
+      </h2>
+      
+      <div class="flex flex-col md:flex-row justify-between items-center text-xs uppercase tracking-[0.1em] text-[#555] border-t border-[#1A1A1A] pt-8">
+        <p>© 2026 NETSITES STUDIO.</p>
+        <p class="mt-4 md:mt-0">Built with pure code.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // High-end scroll reveal observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); 
         }
-    </script>
+      });
+    }, { 
+      threshold: 0.15, // Triggers when 15% of the element is visible
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    document.querySelectorAll('.reveal-up').forEach((el) => {
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
