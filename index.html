@@ -15,10 +15,11 @@
   
   <style>
     :root {
-      --black: #050505;
-      --white: #F8F8F8;
+      --black: #030303;
+      --white: #F4F4F5;
       --grey: #8A8A8A;
-      --dark-grey: #151515;
+      --dark-grey: #121212;
+      --border: #1E1E1E;
     }
 
     body {
@@ -27,6 +28,19 @@
       color: var(--white);
       overflow-x: hidden;
       scroll-behavior: smooth;
+    }
+
+    /* Subtle Architectural Background Grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 4vw 4vw;
+      z-index: -1;
+      pointer-events: none;
     }
     
     /* Striking display typography */
@@ -50,23 +64,26 @@
     .btn-premium {
       background-color: var(--white);
       color: var(--black);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
     }
     .btn-premium:hover {
-      background-color: var(--grey);
-      color: var(--white);
-      transform: scale(1.02);
+      background-color: #D4D4D4;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,255,255,0.1);
     }
 
     .btn-outline {
-      border: 1px solid #333;
+      border: 1px solid #444;
       color: var(--white);
-      transition: all 0.4s ease;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .btn-outline:hover {
       border-color: var(--white);
       background-color: var(--white);
       color: var(--black);
+      transform: translateY(-2px);
     }
 
     /* Image Reveal Effects */
@@ -80,19 +97,28 @@
     }
     .image-mask:hover img {
       transform: scale(1.05);
-      filter: grayscale(40%) contrast(1.1);
+      filter: grayscale(20%) contrast(1.1);
+    }
+
+    /* Interactive Map Styling */
+    .map-container iframe {
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: grayscale(100%) invert(90%) contrast(1.2); /* Creates a dark mode map */
+    }
+    .map-container:hover iframe {
+      filter: grayscale(0%) invert(0%) contrast(1); /* Returns to full color on hover */
     }
 
     /* Pricing Menu Hover Effect */
     .menu-item {
-      border-bottom: 1px solid #222;
-      transition: all 0.4s ease;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .menu-item:hover {
       background-color: var(--dark-grey);
-      padding-left: 1rem;
-      padding-right: 1rem;
-      border-color: var(--grey);
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      border-color: #555;
     }
 
     /* Flawless Infinite Marquee */
@@ -101,8 +127,10 @@
       overflow: hidden;
       display: flex;
       padding: 3rem 0;
-      border-top: 1px solid #222;
-      border-bottom: 1px solid #222;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
     }
     .marquee-track {
       display: flex;
@@ -111,7 +139,7 @@
     }
     .marquee-item {
       font-family: 'Syne', sans-serif;
-      font-size: 3rem;
+      font-size: 3.5rem;
       font-weight: 700;
       text-transform: uppercase;
       padding-right: 4rem;
@@ -127,8 +155,8 @@
     /* Smooth Scroll Reveals */
     .reveal-up {
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(50px);
+      transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .reveal-up.active {
       opacity: 1;
@@ -139,20 +167,20 @@
 <body class="antialiased">
 
   <!-- Minimalist Nav -->
-  <nav class="fixed w-full top-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-[#151515]">
+  <nav class="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-[#1E1E1E]">
     <div class="max-w-[95%] mx-auto px-6 py-5 flex justify-between items-center">
-      <a href="#" class="display-font text-2xl font-bold tracking-tighter uppercase">
+      <a href="#" class="display-font text-3xl font-bold tracking-tighter uppercase">
         ROZE
       </a>
       
       <div class="hidden md:flex gap-10 text-xs font-semibold uppercase tracking-[0.15em] text-[#8A8A8A]">
         <a href="#philosophy" class="hover:text-white transition-colors">Philosophy</a>
         <a href="#services" class="hover:text-white transition-colors">Services</a>
-        <a href="#hours" class="hover:text-white transition-colors">Location</a>
+        <a href="#location" class="hover:text-white transition-colors">Location</a>
       </div>
 
       <!-- Direct link to Resurva Booking -->
-      <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-6 py-3 hover:bg-[#8A8A8A] hover:text-white transition-colors">
+      <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-8 py-3.5 hover:bg-[#D4D4D4] transition-colors rounded-sm">
         Book Now
       </a>
     </div>
@@ -162,30 +190,34 @@
   <header class="min-h-screen flex flex-col justify-center relative px-6 pt-20">
     <div class="max-w-[95%] mx-auto w-full z-10">
       
-      <div class="grid lg:grid-cols-12 gap-8 items-center">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 reveal-up">
-          <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-6">Premium Grooming</p>
-          <h1 class="display-font text-6xl md:text-8xl leading-[0.9] font-bold uppercase tracking-tighter mb-8">
+          <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-6 flex items-center gap-3">
+            <span class="w-8 h-[1px] bg-[#8A8A8A]"></span>
+            Premium Grooming
+          </p>
+          <h1 class="display-font text-[13vw] md:text-[7vw] leading-[0.9] font-bold uppercase tracking-tighter mb-8">
             Precision <br>
-            <span class="editorial-italic text-[#8A8A8A] normal-case font-normal text-7xl md:text-9xl">cuts & shaves.</span>
+            <span class="editorial-italic text-[#8A8A8A] normal-case font-normal">cuts & shaves.</span>
           </h1>
-          <p class="text-lg font-light text-[#A0A0A0] max-w-md mb-10 leading-relaxed">
-            Exacting standards. Classic techniques. An elevated atmosphere designed for the modern gentleman.
+          <p class="text-lg font-light text-[#A0A0A0] max-w-md mb-12 leading-relaxed">
+            Exacting standards. Classic techniques. An elevated atmosphere designed for the modern gentleman in Laval.
           </p>
           
           <div class="flex flex-wrap gap-4">
-            <a href="https://roze.resurva.com/book" target="_blank" class="btn-premium px-10 py-4 text-sm font-bold uppercase tracking-widest">
-              Secure Your Chair
+            <a href="https://roze.resurva.com/book" target="_blank" class="btn-premium px-10 py-5 text-sm font-bold uppercase tracking-widest rounded-sm">
+              Secure Your Chair ↗
             </a>
-            <a href="#services" class="btn-outline px-10 py-4 text-sm font-bold uppercase tracking-widest">
+            <a href="#services" class="btn-outline px-10 py-5 text-sm font-bold uppercase tracking-widest rounded-sm">
               View Pricing
             </a>
           </div>
         </div>
 
         <!-- Hero Image -->
-        <div class="lg:col-span-5 image-mask reveal-up hidden lg:block" style="transition-delay: 0.2s;">
-          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Roze Barbershop Interior" class="w-full h-[650px] object-cover">
+        <div class="lg:col-span-5 image-mask reveal-up hidden lg:block rounded-md" style="transition-delay: 0.2s;">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Roze Barbershop Interior" class="w-full h-[700px] object-cover">
+          <div class="absolute inset-0 ring-1 ring-inset ring-white/10 pointer-events-none"></div>
         </div>
       </div>
       
@@ -198,7 +230,7 @@
       <h2 class="text-3xl md:text-5xl font-light leading-snug">
         "More than just a haircut. It is a <span class="editorial-italic text-[#8A8A8A]">revitalization ritual</span> executed with absolute precision."
       </h2>
-      <p class="mt-10 text-xs uppercase tracking-[0.2em] text-[#555] font-bold">The Roze Standard</p>
+      <p class="mt-12 text-xs uppercase tracking-[0.2em] text-[#555] font-bold">The Roze Standard</p>
     </div>
   </section>
 
@@ -218,123 +250,142 @@
     </div>
   </div>
 
-  <!-- Services & Pricing Menu (No Bulky Forms!) -->
+  <!-- Services & Pricing Menu -->
   <section id="services" class="py-32 px-6">
-    <div class="max-w-[95%] lg:max-w-5xl mx-auto">
+    <div class="max-w-[95%] lg:max-w-6xl mx-auto">
       
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-up">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal-up">
         <div>
-          <h2 class="display-font text-5xl uppercase font-bold tracking-tighter mb-2">Services</h2>
-          <p class="text-[#8A8A8A] font-light">Select your service. Secure your time.</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-4">Investment</p>
+          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-2">Services</h2>
         </div>
-        <a href="https://roze.resurva.com/book" target="_blank" class="hidden md:inline-block border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#8A8A8A] hover:border-[#8A8A8A] transition-colors">
-          Book Appt ↗
+        <a href="https://roze.resurva.com/book" target="_blank" class="hidden md:flex items-center gap-2 border-b border-white pb-1 text-xs uppercase tracking-widest hover:text-[#8A8A8A] hover:border-[#8A8A8A] transition-colors">
+          Book Appointment <span class="text-[10px]">↗</span>
         </a>
       </div>
 
       <div class="w-full">
         
         <!-- Menu Item 1 -->
-        <div class="menu-item py-8 flex flex-col md:flex-row justify-between items-baseline reveal-up">
+        <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Bespoke Haircut</h3>
-            <p class="text-[#8A8A8A] text-sm font-light">Precision cut, tailored to your head shape and lifestyle. Includes a hot towel finish and styling.</p>
+            <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Bespoke Haircut</h3>
+            <p class="text-[#8A8A8A] text-sm md:text-base font-light leading-relaxed max-w-xl">Precision cut, tailored to your head shape and lifestyle. Includes a hot towel finish and styling.</p>
           </div>
-          <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-3xl text-white">$45</span>
+          <div class="mt-4 md:mt-0 flex items-baseline gap-4">
+            <span class="editorial-italic text-4xl text-white">$45</span>
           </div>
         </div>
 
         <!-- Menu Item 2 -->
-        <div class="menu-item py-8 flex flex-col md:flex-row justify-between items-baseline reveal-up">
+        <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Haircut & Beard Trim</h3>
-            <p class="text-[#8A8A8A] text-sm font-light">The complete package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
+            <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Haircut & Beard Trim</h3>
+            <p class="text-[#8A8A8A] text-sm md:text-base font-light leading-relaxed max-w-xl">The complete package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
           </div>
           <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-3xl text-white">$65</span>
+            <span class="editorial-italic text-4xl text-white">$65</span>
           </div>
         </div>
 
         <!-- Menu Item 3 -->
-        <div class="menu-item py-8 flex flex-col md:flex-row justify-between items-baseline reveal-up">
+        <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Hot Towel Shave</h3>
-            <p class="text-[#8A8A8A] text-sm font-light">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
+            <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Hot Towel Shave</h3>
+            <p class="text-[#8A8A8A] text-sm md:text-base font-light leading-relaxed max-w-xl">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
           </div>
           <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-3xl text-white">$40</span>
+            <span class="editorial-italic text-4xl text-white">$40</span>
           </div>
         </div>
 
         <!-- Menu Item 4 -->
-        <div class="menu-item py-8 flex flex-col md:flex-row justify-between items-baseline reveal-up">
+        <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default border-b-0">
           <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Line Up / Edge Up</h3>
-            <p class="text-[#8A8A8A] text-sm font-light">Crisp, sharp lines around the perimeter of the hairline and beard to keep you looking fresh between cuts.</p>
+            <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Line Up / Edge Up</h3>
+            <p class="text-[#8A8A8A] text-sm md:text-base font-light leading-relaxed max-w-xl">Crisp, sharp lines around the perimeter of the hairline and beard to keep you looking fresh between cuts.</p>
           </div>
           <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-3xl text-white">$25</span>
-          </div>
-        </div>
-
-        <!-- Menu Item 5 -->
-        <div class="menu-item py-8 flex flex-col md:flex-row justify-between items-baseline reveal-up border-b-0">
-          <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Young Gentlemen (12 & Under)</h3>
-            <p class="text-[#8A8A8A] text-sm font-light">Same precision, scaled for the younger crowd.</p>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-3xl text-white">$35</span>
+            <span class="editorial-italic text-4xl text-white">$25</span>
           </div>
         </div>
 
       </div>
 
-      <!-- Massive Call to Action pointing to Resurva -->
-      <div class="mt-20 text-center reveal-up">
-        <a href="https://roze.resurva.com/book" target="_blank" class="inline-block bg-white text-black display-font text-3xl md:text-5xl uppercase font-bold px-12 py-8 hover:bg-[#8A8A8A] hover:text-white transition-colors w-full md:w-auto">
-          Book Appointment →
+      <!-- Massive Call to Action -->
+      <div class="mt-24 text-center reveal-up">
+        <a href="https://roze.resurva.com/book" target="_blank" class="inline-block bg-white text-black display-font text-3xl md:text-6xl uppercase font-bold px-12 py-10 hover:bg-[#D4D4D4] transition-colors w-full md:w-auto rounded-md shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_60px_rgba(255,255,255,0.2)]">
+          Book Your Time ↗
         </a>
       </div>
 
     </div>
   </section>
 
-  <!-- Location & Hours Footer -->
-  <footer id="hours" class="bg-[#0A0A0A] pt-24 pb-10 px-6 border-t border-[#151515]">
-    <div class="max-w-[95%] mx-auto grid md:grid-cols-3 gap-16 mb-24 reveal-up">
+  <!-- Interactive Map & Location Section -->
+  <section id="location" class="py-32 px-6 bg-[#080808] border-t border-[#1E1E1E]">
+    <div class="max-w-[95%] lg:max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
-      <div>
-        <h4 class="text-xs uppercase tracking-[0.2em] text-[#555] font-bold mb-6">Location</h4>
-        <p class="text-lg font-light text-[#D0D0D0] leading-relaxed">
-          123 Premium Ave.<br>
-          Downtown District<br>
-          City, State 12345
+      <div class="reveal-up">
+        <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-4">Coordinates</p>
+        <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-8">The Studio</h2>
+        <p class="text-lg font-light text-[#A0A0A0] max-w-md mb-12 leading-relaxed">
+          Located in the heart of Laval. We operate in a space designed purely for focus, precision, and the ultimate grooming experience.
         </p>
+        
+        <div class="space-y-6 text-xl font-light text-[#D0D0D0] mb-12 border-l border-[#333] pl-6">
+          <p>4629 Ch. du Souvenir<br>Laval, QC H7W 1C5</p>
+        </div>
+
+        <a href="https://www.google.com/maps/place/4629+Ch+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="btn-outline px-8 py-4 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-sm">
+          Open in Native Maps ↗
+        </a>
       </div>
 
+      <!-- Interactive Map Window with Hover Color Reveal -->
+      <div class="reveal-up" style="transition-delay: 0.2s;">
+        <div class="map-container p-3 border border-[#1E1E1E] bg-[#0A0A0A] rounded-2xl relative group shadow-2xl">
+           <!-- Google Maps iframe pointing to Roze Barbershop's actual address -->
+           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2792.203258509062!2d-73.76677462332616!3d45.52562473210355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc9231f24ba22c9%3A0xc3af8cfb3956f7a6!2s4629%2Ch%20Du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1714000000000!5m2!1sen!2sca" 
+             width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
+           </iframe>
+           <!-- Glass overlay ring -->
+           <div class="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl"></div>
+           
+           <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-[#333] opacity-100 transition-opacity duration-500 group-hover:opacity-0">
+             Hover to Interact
+           </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hours Footer -->
+  <footer class="bg-[#030303] pt-24 pb-10 px-6 border-t border-[#1E1E1E]">
+    <div class="max-w-[95%] mx-auto grid md:grid-cols-2 gap-16 mb-24 reveal-up">
+      
       <div>
-        <h4 class="text-xs uppercase tracking-[0.2em] text-[#555] font-bold mb-6">Hours</h4>
-        <ul class="text-lg font-light text-[#D0D0D0] space-y-2">
-          <li class="flex justify-between"><span>Mon - Fri</span> <span>9am - 7pm</span></li>
-          <li class="flex justify-between"><span>Saturday</span> <span>9am - 5pm</span></li>
-          <li class="flex justify-between text-[#8A8A8A]"><span>Sunday</span> <span>Closed</span></li>
+        <h4 class="text-xs uppercase tracking-[0.2em] text-[#555] font-bold mb-6">Operating Hours</h4>
+        <ul class="text-lg font-light text-[#D0D0D0] space-y-4 max-w-sm">
+          <li class="flex justify-between border-b border-[#111] pb-2"><span>Monday - Friday</span> <span>9:00 AM - 7:00 PM</span></li>
+          <li class="flex justify-between border-b border-[#111] pb-2"><span>Saturday</span> <span>9:00 AM - 5:00 PM</span></li>
+          <li class="flex justify-between text-[#555] pb-2"><span>Sunday</span> <span>Closed</span></li>
         </ul>
       </div>
 
-      <div>
+      <div class="md:text-right">
         <h4 class="text-xs uppercase tracking-[0.2em] text-[#555] font-bold mb-6">Connect</h4>
-        <div class="flex flex-col items-start gap-3 text-lg font-light text-[#D0D0D0]">
+        <div class="flex flex-col md:items-end gap-3 text-lg font-light text-[#D0D0D0]">
           <a href="#" class="border-b border-transparent hover:border-white transition-colors">Instagram</a>
-          <a href="mailto:hello@rozebarbershop.com" class="border-b border-transparent hover:border-white transition-colors">hello@rozebarbershop.com</a>
         </div>
       </div>
 
     </div>
 
-    <div class="max-w-[95%] mx-auto text-center border-t border-[#151515] pt-8">
-      <p class="text-xs uppercase tracking-[0.1em] text-[#555]">© 2026 ROZE Barbershop. All rights reserved.</p>
+    <div class="max-w-[95%] mx-auto flex flex-col md:flex-row justify-between items-center text-center border-t border-[#111] pt-8">
+      <p class="text-[10px] uppercase tracking-[0.2em] text-[#555]">© 2026 ROZE Barbershop Laval. All rights reserved.</p>
+      <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-[#555] mt-4 md:mt-0 hover:text-white transition-colors">Back to Top ↑</a>
     </div>
   </footer>
 
