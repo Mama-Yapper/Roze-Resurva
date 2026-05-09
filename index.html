@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROZE | Premium Barbershop</title>
+  <title>ROZE BARBERSHOP | Barbier Roze</title>
   
-  <!-- High-End Barbershop Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
 
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Premium Editorial Typography -->
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
@@ -30,7 +28,6 @@
       scroll-behavior: smooth;
     }
 
-    /* Subtle Architectural Background Grid */
     body::before {
       content: "";
       position: fixed;
@@ -43,12 +40,10 @@
       pointer-events: none;
     }
     
-    /* Striking display typography */
     h1, h2, h3, .display-font {
       font-family: 'Syne', sans-serif;
     }
 
-    /* Elegant, high-fashion italics */
     .editorial-italic {
       font-family: 'Instrument Serif', serif;
       font-style: italic;
@@ -60,7 +55,6 @@
       color: var(--black);
     }
 
-    /* Premium Button Hover Effects */
     .btn-premium {
       background-color: var(--white);
       color: var(--black);
@@ -86,7 +80,6 @@
       transform: translateY(-2px);
     }
 
-    /* Image Reveal Effects */
     .image-mask {
       overflow: hidden;
       position: relative;
@@ -100,16 +93,46 @@
       filter: grayscale(20%) contrast(1.1);
     }
 
-    /* Interactive Map Styling */
-    .map-container iframe {
-      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      filter: grayscale(100%) invert(90%) contrast(1.2); /* Creates a dark mode map */
+    /* Instagram Grid Hover Effects */
+    .ig-post {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
     }
-    .map-container:hover iframe {
-      filter: grayscale(0%) invert(0%) contrast(1); /* Returns to full color on hover */
+    .ig-post img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+      filter: grayscale(80%);
+    }
+    .ig-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      backdrop-filter: blur(4px);
+    }
+    .ig-post:hover img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+    .ig-post:hover .ig-overlay {
+      opacity: 1;
     }
 
-    /* Pricing Menu Hover Effect */
+    .map-container iframe {
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: grayscale(100%) invert(90%) contrast(1.2); 
+    }
+    .map-container:hover iframe {
+      filter: grayscale(0%) invert(0%) contrast(1); 
+    }
+
     .menu-item {
       border-bottom: 1px solid var(--border);
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -121,7 +144,6 @@
       border-color: #555;
     }
 
-    /* Flawless Infinite Marquee */
     .marquee {
       width: 100%;
       overflow: hidden;
@@ -152,7 +174,6 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* Smooth Scroll Reveals */
     .reveal-up {
       opacity: 0;
       transform: translateY(50px);
@@ -169,20 +190,26 @@
   <!-- Minimalist Nav -->
   <nav class="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-[#1E1E1E]">
     <div class="max-w-[95%] mx-auto px-6 py-5 flex justify-between items-center">
-      <a href="#" class="display-font text-3xl font-bold tracking-tighter uppercase">
-        ROZE
+      <a href="#" class="flex flex-col">
+        <span class="display-font text-2xl font-bold tracking-tighter uppercase leading-none">ROZE</span>
+        <span class="text-[10px] uppercase tracking-[0.3em] text-[#8A8A8A] mt-1">Barbershop • Barbier</span>
       </a>
       
       <div class="hidden md:flex gap-10 text-xs font-semibold uppercase tracking-[0.15em] text-[#8A8A8A]">
         <a href="#philosophy" class="hover:text-white transition-colors">Philosophy</a>
         <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#social" class="hover:text-white transition-colors">Work</a>
         <a href="#location" class="hover:text-white transition-colors">Location</a>
       </div>
 
-      <!-- Direct link to Resurva Booking -->
-      <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-8 py-3.5 hover:bg-[#D4D4D4] transition-colors rounded-sm">
-        Book Now
-      </a>
+      <div class="flex items-center gap-4">
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="hidden lg:block text-xs uppercase tracking-widest text-[#8A8A8A] hover:text-white transition-colors">
+          IG: @thelifeofroze
+        </a>
+        <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-8 py-3.5 hover:bg-[#D4D4D4] transition-colors rounded-sm">
+          Book Now
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -230,7 +257,7 @@
       <h2 class="text-3xl md:text-5xl font-light leading-snug">
         "More than just a haircut. It is a <span class="editorial-italic text-[#8A8A8A]">revitalization ritual</span> executed with absolute precision."
       </h2>
-      <p class="mt-12 text-xs uppercase tracking-[0.2em] text-[#555] font-bold">The Roze Standard</p>
+      <p class="mt-12 text-xs uppercase tracking-[0.2em] text-[#555] font-bold">The Roze Barbershop Standard</p>
     </div>
   </section>
 
@@ -265,8 +292,6 @@
       </div>
 
       <div class="w-full">
-        
-        <!-- Menu Item 1 -->
         <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Bespoke Haircut</h3>
@@ -277,7 +302,6 @@
           </div>
         </div>
 
-        <!-- Menu Item 2 -->
         <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Haircut & Beard Trim</h3>
@@ -288,7 +312,6 @@
           </div>
         </div>
 
-        <!-- Menu Item 3 -->
         <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Hot Towel Shave</h3>
@@ -299,7 +322,6 @@
           </div>
         </div>
 
-        <!-- Menu Item 4 -->
         <div class="menu-item py-10 flex flex-col md:flex-row justify-between items-baseline reveal-up cursor-default border-b-0">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-4xl uppercase font-bold tracking-tight mb-3">Line Up / Edge Up</h3>
@@ -309,10 +331,59 @@
             <span class="editorial-italic text-4xl text-white">$25</span>
           </div>
         </div>
-
       </div>
 
-      <!-- Massive Call to Action -->
+    </div>
+  </section>
+
+  <!-- Social Feed / Instagram Integration -->
+  <section id="social" class="py-32 px-6 border-t border-[#1E1E1E] bg-[#050505]">
+    <div class="max-w-[95%] lg:max-w-6xl mx-auto">
+      
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-up">
+        <div>
+          <p class="text-xs uppercase tracking-[0.2em] text-[#8A8A8A] mb-4">Portfolio</p>
+          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-2">From The Feed</h2>
+        </div>
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="mt-6 md:mt-0 btn-outline px-8 py-4 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-sm">
+          <span>Follow @thelifeofroze</span>
+          <span>↗</span>
+        </a>
+      </div>
+
+      <!-- Instagram Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal-up" style="transition-delay: 0.1s;">
+        
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post rounded-sm">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Cut">
+          <div class="ig-overlay">
+            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View on Instagram</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post rounded-sm">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Work">
+          <div class="ig-overlay">
+            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View on Instagram</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post rounded-sm">
+          <img src="https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Fade">
+          <div class="ig-overlay">
+            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View on Instagram</span>
+          </div>
+        </a>
+
+        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post rounded-sm">
+          <img src="https://images.unsplash.com/photo-1532710093739-9470acff878b?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Detail">
+          <div class="ig-overlay">
+            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View on Instagram</span>
+          </div>
+        </a>
+
+      </div>
+      
       <div class="mt-24 text-center reveal-up">
         <a href="https://roze.resurva.com/book" target="_blank" class="inline-block bg-white text-black display-font text-3xl md:text-6xl uppercase font-bold px-12 py-10 hover:bg-[#D4D4D4] transition-colors w-full md:w-auto rounded-md shadow-[0_0_40px_rgba(255,255,255,0.1)] hover:shadow-[0_0_60px_rgba(255,255,255,0.2)]">
           Book Your Time ↗
@@ -342,14 +413,11 @@
         </a>
       </div>
 
-      <!-- Interactive Map Window with Hover Color Reveal -->
       <div class="reveal-up" style="transition-delay: 0.2s;">
         <div class="map-container p-3 border border-[#1E1E1E] bg-[#0A0A0A] rounded-2xl relative group shadow-2xl">
-           <!-- Google Maps iframe pointing to Roze Barbershop's actual address -->
            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2792.203258509062!2d-73.76677462332616!3d45.52562473210355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc9231f24ba22c9%3A0xc3af8cfb3956f7a6!2s4629%2Ch%20Du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1714000000000!5m2!1sen!2sca" 
              width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
            </iframe>
-           <!-- Glass overlay ring -->
            <div class="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 rounded-2xl"></div>
            
            <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-[#333] opacity-100 transition-opacity duration-500 group-hover:opacity-0">
@@ -377,20 +445,20 @@
       <div class="md:text-right">
         <h4 class="text-xs uppercase tracking-[0.2em] text-[#555] font-bold mb-6">Connect</h4>
         <div class="flex flex-col md:items-end gap-3 text-lg font-light text-[#D0D0D0]">
-          <a href="#" class="border-b border-transparent hover:border-white transition-colors">Instagram</a>
+          <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="border-b border-transparent hover:border-white transition-colors">Instagram</a>
+          <a href="https://roze.resurva.com/book" target="_blank" class="border-b border-transparent hover:border-white transition-colors">Resurva Booking</a>
         </div>
       </div>
 
     </div>
 
     <div class="max-w-[95%] mx-auto flex flex-col md:flex-row justify-between items-center text-center border-t border-[#111] pt-8">
-      <p class="text-[10px] uppercase tracking-[0.2em] text-[#555]">© 2026 ROZE Barbershop Laval. All rights reserved.</p>
+      <p class="text-[10px] uppercase tracking-[0.2em] text-[#555]">© 2026 ROZE BARBERSHOP / BARBIER ROZE. All rights reserved.</p>
       <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-[#555] mt-4 md:mt-0 hover:text-white transition-colors">Back to Top ↑</a>
     </div>
   </footer>
 
   <script>
-    // Smooth scroll for anchors
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -400,7 +468,6 @@
         });
     });
 
-    // Scroll reveal observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
