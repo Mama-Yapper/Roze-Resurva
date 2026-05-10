@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROZE BARBERSHOP | Barbier Roze</title>
-  <meta name="description" content="Great haircuts, fresh fades, and hot towel shaves in Laval. Book your spot at Roze Barbershop today.">
+  <title>ROZE BARBERSHOP | Local Laval Barber</title>
+  <meta name="description" content="Laval's neighborhood spot for tight fades, sharp line-ups, and classic hot towel shaves. Walk-ins welcome, or book online.">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✂️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💈</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --black: #030303;
+      --black: #050505;
       --white: #F4F4F5;
       --grey: #8A8A8A;
-      --border: rgba(255, 255, 255, 0.1);
-      /* Simulated Framer Motion Spring Physics */
+      --border: rgba(255, 255, 255, 0.08);
       --spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
       --spring-soft: cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -34,7 +33,7 @@
       content: "";
       position: fixed;
       top: -20%; left: -10%; width: 50vw; height: 50vh;
-      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
       filter: blur(80px);
       z-index: -2;
       pointer-events: none;
@@ -58,7 +57,7 @@
     }
 
     .btn-outline {
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.15);
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(10px);
       color: var(--white);
@@ -72,32 +71,32 @@
 
     /* Glassmorphism Classes */
     .glass-panel {
-      background: rgba(15, 15, 15, 0.4);
+      background: rgba(15, 15, 15, 0.6);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border);
-      border-radius: 20px;
+      border-radius: 16px;
     }
 
     /* Spring Hover Images */
-    .image-mask { overflow: hidden; position: relative; border-radius: 20px; }
+    .image-mask { overflow: hidden; position: relative; border-radius: 16px; }
     .image-mask img {
       width: 100%; height: 100%; object-fit: cover;
       transition: transform 0.8s var(--spring), filter 0.8s ease;
-      filter: grayscale(80%) contrast(1.1);
+      filter: grayscale(40%) contrast(1.1);
     }
     .image-mask:hover img {
-      transform: scale(1.08);
+      transform: scale(1.04);
       filter: grayscale(0%) contrast(1.1);
     }
 
     .ig-post {
-      position: relative; overflow: hidden; border-radius: 16px; aspect-ratio: 1 / 1;
+      position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 1 / 1;
       border: 1px solid var(--border);
       transition: transform 0.4s var(--spring);
     }
     .ig-post:hover { transform: translateY(-8px); z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
-    .ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--spring-soft), filter 0.6s ease; filter: grayscale(100%); }
+    .ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--spring-soft), filter 0.6s ease; filter: grayscale(80%); }
     .ig-post:hover img { transform: scale(1.05); filter: grayscale(0%); }
     .ig-overlay {
       position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
@@ -140,22 +139,22 @@
 </head>
 <body class="antialiased">
 
-  <nav class="fixed w-full top-0 z-50 bg-[#030303]/60 backdrop-blur-xl border-b border-white/10">
+  <nav class="fixed w-full top-0 z-50 bg-[#050505]/70 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-[95%] mx-auto px-6 py-5 flex justify-between items-center">
       <a href="#" class="flex flex-col group">
         <span class="display-font text-2xl font-bold tracking-tighter uppercase leading-none group-hover:text-gray-300 transition-colors">ROZE</span>
-        <span class="text-[10px] uppercase tracking-[0.3em] text-gray-400 mt-1">Barbershop • Barbier</span>
+        <span class="text-[10px] uppercase tracking-[0.3em] text-gray-400 mt-1">Laval, QC</span>
       </a>
       
       <div class="hidden md:flex gap-10 text-xs font-semibold uppercase tracking-[0.15em] text-gray-400">
-        <a href="#philosophy" class="hover:text-white transition-colors">About</a>
-        <a href="#services" class="hover:text-white transition-colors">Prices</a>
-        <a href="#social" class="hover:text-white transition-colors">Gallery</a>
+        <a href="#story" class="hover:text-white transition-colors">Our Story</a>
+        <a href="#services" class="hover:text-white transition-colors">Menu</a>
+        <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
       </div>
 
       <div class="flex items-center gap-4">
         <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-8 py-3.5 hover:bg-gray-200 hover:scale-105 transition-all duration-300 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-          Book Now
+          Book a Chair
         </a>
       </div>
     </div>
@@ -168,29 +167,29 @@
         <div class="lg:col-span-7 appear-up">
           <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-6 flex items-center gap-3">
             <span class="w-8 h-[1px] bg-gray-400"></span>
-            Great Haircuts. Clean Shaves.
+            No gimmicks, just good hair.
           </p>
           <h1 class="display-font text-[13vw] md:text-[7vw] leading-[0.9] font-bold uppercase tracking-tighter mb-8">
-            Fresh fades <br>
-            <span class="editorial-italic text-gray-400 normal-case font-normal">& sharp lines.</span>
+            Laval's <br>
+            <span class="editorial-italic text-gray-400 normal-case font-normal">neighborhood</span> shop.
           </h1>
           <p class="text-lg font-light text-gray-300 max-w-md mb-12 leading-relaxed">
-            Top quality haircuts and classic shaving techniques. A great spot to get a fresh look right here in Laval.
+            Tight fades, sharp line-ups, and hot towel shaves. Pull up, grab a coffee, and let us sort you out.
           </p>
           
           <div class="flex flex-wrap gap-4">
             <a href="https://roze.resurva.com/book" target="_blank" class="btn-premium px-10 py-4 text-sm font-bold uppercase tracking-widest rounded-full">
-              Book Your Spot ↗
+              Grab an Appointment ↗
             </a>
             <a href="#services" class="btn-outline px-10 py-4 text-sm font-bold uppercase tracking-widest rounded-full">
-              See Prices
+              Check Prices
             </a>
           </div>
         </div>
 
         <div class="lg:col-span-5 appear-scale hidden lg:block" style="transition-delay: 0.1s;">
           <div class="glass-panel p-2 shadow-2xl shadow-white/5">
-            <div class="image-mask h-[650px]">
+            <div class="image-mask h-[600px]">
               <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Roze Barbershop Interior">
             </div>
           </div>
@@ -200,45 +199,40 @@
     </div>
   </header>
 
-  <section id="philosophy" class="py-32 px-6 bg-black/50">
-    <div class="max-w-4xl mx-auto text-center appear-up">
-      <h2 class="text-3xl md:text-5xl font-light leading-snug">
-        "More than just a haircut. It is a <span class="editorial-italic text-gray-400">fresh start</span> done right."
-      </h2>
-      <p class="mt-12 text-xs uppercase tracking-[0.2em] text-gray-500 font-bold">The Roze Barbershop Standard</p>
+  <section id="story" class="py-32 px-6 bg-black/50 border-t border-b border-white/5">
+    <div class="max-w-4xl mx-auto appear-up">
+      <h2 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6 text-center">Where we started</h2>
+      <h3 class="text-3xl md:text-5xl font-light leading-snug text-center mb-10">
+        "I started cutting hair in my parents' basement back in 2018. Now we're here on <span class="editorial-italic text-gray-400">Ch. du Souvenir</span>. Same attention to detail, just a nicer chair."
+      </h3>
+      <div class="flex items-center justify-center gap-4">
+        <div class="w-12 h-12 rounded-full overflow-hidden grayscale">
+          <img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?auto=format&fit=crop&w=100&q=80" alt="Roze" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <p class="font-bold text-sm">Roze</p>
+          <p class="text-xs text-gray-500">Owner & Head Barber</p>
+        </div>
+      </div>
     </div>
   </section>
-
-  <div class="marquee">
-    <div class="marquee-track">
-      <span class="marquee-item">Fades <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Tapers <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Hot Towel Shaves <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Beards <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-    </div>
-    <div class="marquee-track" aria-hidden="true">
-      <span class="marquee-item">Fades <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Tapers <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Hot Towel Shaves <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-      <span class="marquee-item">Beards <span class="editorial-italic text-gray-600 ml-8">—</span></span>
-    </div>
-  </div>
 
   <section id="services" class="py-32 px-6 relative">
     <div class="max-w-[95%] lg:max-w-5xl mx-auto">
       
       <div class="flex flex-col md:flex-row justify-between items-end mb-16 appear-up">
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">What we do</p>
-          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter">Prices</h2>
+          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">The Menu</p>
+          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter">Cuts & Shaves</h2>
         </div>
+        <p class="text-sm text-gray-500 hidden md:block border-b border-gray-700 pb-1">Cash or Debit accepted in-store.</p>
       </div>
 
       <div class="w-full">
         <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Classic Haircut</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">A great cut that fits your style. Finished off with a hot towel and fresh styling.</p>
+            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Standard fade, taper, or scissor cut. Finished with a hot towel to clean you up.</p>
           </div>
           <div class="mt-4 md:mt-0 flex items-center gap-4">
             <span class="editorial-italic text-4xl text-white">$45</span>
@@ -248,7 +242,7 @@
         <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.1s;">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Haircut & Beard</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">The full package. A sharp haircut plus a clean beard trim and straight razor line-up.</p>
+            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">The full reset. Haircut plus a shaped beard trim and straight razor line-up on the cheeks and neck.</p>
           </div>
           <div class="mt-4 md:mt-0">
             <span class="editorial-italic text-4xl text-white">$65</span>
@@ -258,7 +252,7 @@
         <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.2s;">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Hot Towel Shave</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">The classic barbershop experience. Hot steam towels, warm lather, and a smooth straight razor shave.</p>
+            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Old school straight razor shave. Hot steam towels, shaving cream lather, and aftershave balm.</p>
           </div>
           <div class="mt-4 md:mt-0">
             <span class="editorial-italic text-4xl text-white">$40</span>
@@ -268,7 +262,7 @@
         <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.3s;">
           <div class="md:w-2/3">
             <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Line Up</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Crisp edges around the hairline and beard to keep you looking fresh between full cuts.</p>
+            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Just need the edges cleaned up? We'll hit the hairline and beard with the trimmers and razor. No fade included.</p>
           </div>
           <div class="mt-4 md:mt-0">
             <span class="editorial-italic text-4xl text-white">$25</span>
@@ -279,13 +273,40 @@
     </div>
   </section>
 
+  <section id="reviews" class="py-32 px-6 bg-[#080808] border-t border-white/5">
+    <div class="max-w-[95%] lg:max-w-6xl mx-auto">
+      <div class="text-center mb-16 appear-up">
+        <h2 class="display-font text-4xl md:text-5xl uppercase font-bold tracking-tighter">Word on the street</h2>
+        <p class="text-gray-400 mt-4">Actual reviews from the guys in Laval.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 appear-up" style="transition-delay: 0.1s;">
+        <div class="glass-panel p-8">
+          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Roze hooked me up before my wedding. The fade was super clean. He was running about 10 minutes behind schedule because the guy before me was complicated, but the cut was 100% worth the wait."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Marc T.</p>
+        </div>
+        <div class="glass-panel p-8">
+          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Moved to Laval last year and tried 3 different shops before finding this one. Chill music, good vibes, and they don't rush you out of the chair. Highly recommend getting the beard trim too."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— David S.</p>
+        </div>
+        <div class="glass-panel p-8">
+          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Straight forward, no BS barbershop. I usually just get a standard scissor cut and they always listen to exactly what I ask for instead of just shaving it all off. Easy to book online too."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Kevin P.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="social" class="py-32 px-6 border-t border-white/5 bg-[#050505]">
     <div class="max-w-[95%] lg:max-w-6xl mx-auto">
       
       <div class="flex flex-col md:flex-row justify-between items-end mb-16 appear-up">
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Gallery</p>
-          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-2">Our Work</h2>
+          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">The Work</p>
+          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-2">Recent Cuts</h2>
         </div>
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="mt-6 md:mt-0 btn-outline px-8 py-3 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-full">
           <span>Follow @thelifeofroze</span>
@@ -293,44 +314,20 @@
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 appear-up" style="transition-delay: 0.1s;">
-        
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 appear-up" style="transition-delay: 0.1s;">
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post">
           <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Cut">
-          <div class="ig-overlay">
-            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View</span>
-          </div>
         </a>
-
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.1s;">
           <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Work">
-          <div class="ig-overlay">
-            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View</span>
-          </div>
         </a>
-
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.2s;">
           <img src="https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Fade">
-          <div class="ig-overlay">
-            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View</span>
-          </div>
         </a>
-
         <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.3s;">
           <img src="https://images.unsplash.com/photo-1532710093739-9470acff878b?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Detail">
-          <div class="ig-overlay">
-            <span class="text-white text-sm tracking-widest uppercase font-bold border-b border-white pb-1">View</span>
-          </div>
-        </a>
-
-      </div>
-      
-      <div class="mt-24 text-center appear-up">
-        <a href="https://roze.resurva.com/book" target="_blank" class="inline-block bg-white text-black display-font text-3xl md:text-5xl uppercase font-bold px-12 py-8 hover:bg-gray-200 transition-all duration-300 w-full md:w-auto rounded-full shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] hover:-translate-y-2">
-          Pick a Time ↗
         </a>
       </div>
-
     </div>
   </section>
 
@@ -339,9 +336,9 @@
       
       <div class="appear-up">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Location</p>
-        <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-8">The Shop</h2>
-        <p class="text-lg font-light text-gray-300 max-w-md mb-12 leading-relaxed">
-          Located right in Laval. We created a cool, clean space focused on giving you the best haircut and experience possible.
+        <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-8">Drop By.</h2>
+        <p class="text-lg font-light text-gray-300 max-w-md mb-8 leading-relaxed">
+          We're located in the heart of Laval. Walk-ins are welcome if we have an open chair, but booking ahead guarantees your spot. 
         </p>
         
         <div class="space-y-6 text-xl font-light text-gray-200 mb-12 border-l border-gray-800 pl-6">
@@ -358,9 +355,6 @@
            <iframe src="https://maps.google.com/maps?q=4629%20Chem.%20du%20Souvenir,%20Laval,%20QC%20H7W%201C5&t=&z=15&ie=UTF8&iwloc=&output=embed" 
              width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
            </iframe>
-           <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-gray-800 rounded-full opacity-100 transition-opacity duration-500 group-hover:opacity-0">
-             Hover to zoom
-           </div>
         </div>
       </div>
 
@@ -372,18 +366,18 @@
       
       <div>
         <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">Shop Hours</h4>
-        <ul class="text-lg font-light text-gray-300 space-y-4 max-w-sm">
+        <ul class="text-base font-light text-gray-300 space-y-4 max-w-sm">
           <li class="flex justify-between border-b border-gray-900 pb-2"><span>Mon - Fri</span> <span>9:00 AM - 7:00 PM</span></li>
           <li class="flex justify-between border-b border-gray-900 pb-2"><span>Saturday</span> <span>9:00 AM - 5:00 PM</span></li>
-          <li class="flex justify-between text-gray-600 pb-2"><span>Sunday</span> <span>Closed</span></li>
+          <li class="flex justify-between text-gray-600 pb-2"><span>Sunday</span> <span>Closed (Family Day)</span></li>
         </ul>
       </div>
 
       <div class="md:text-right flex flex-col md:items-end justify-between">
         <div>
           <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">Links</h4>
-          <div class="flex flex-col md:items-end gap-3 text-lg font-light text-gray-300">
-            <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="hover:text-white transition-colors">Instagram</a>
+          <div class="flex flex-col md:items-end gap-3 text-base font-light text-gray-300">
+            <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="hover:text-white transition-colors">Follow the Shop</a>
             <a href="https://roze.resurva.com/book" target="_blank" class="hover:text-white transition-colors">Book an Appointment</a>
           </div>
         </div>
@@ -392,10 +386,10 @@
     </div>
 
     <div class="max-w-[95%] mx-auto flex flex-col md:flex-row justify-between items-center text-center border-t border-gray-900 pt-8 appear-up">
-      <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500">© 2026 ROZE BARBERSHOP. All rights reserved.</p>
+      <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500">© 2026 ROZE BARBERSHOP.</p>
       
-      <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-gray-300 font-bold mt-4 md:mt-0 hover:text-white transition-colors flex items-center gap-2">
-        <span>Designed by NETSites</span>
+      <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mt-4 md:mt-0 hover:text-white transition-colors flex items-center gap-2">
+        <span>Coded by NETSites</span>
       </a>
     </div>
   </footer>
@@ -409,12 +403,11 @@
         });
     });
 
-    // Intersection Observer for Framer Motion style appear effects
+    // Intersection Observer for organic appear effects
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          // Optional: Stop observing once revealed for better performance
           observer.unobserve(entry.target); 
         }
       });
@@ -423,7 +416,6 @@
       rootMargin: "0px 0px -50px 0px"
     });
 
-    // Observe elements
     document.querySelectorAll('.appear-up, .appear-scale').forEach((el) => {
       observer.observe(el);
     });
