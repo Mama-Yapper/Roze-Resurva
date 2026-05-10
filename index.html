@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stephen Malouf | Montreal Small Business Accountant</title>
-  <meta name="description" content="Montreal accountant specializing in small business, year-end corporate tax, and monthly bookkeeping. Real business experience since 2008.">
+  <title>Stephen Malouf | Montreal Accountant</title>
+  <meta name="description" content="Montreal accountant specializing in small business, year-end corporate tax, and monthly bookkeeping.">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,10 +12,10 @@
   
   <style>
     :root {
-      --bg: #0A0F16; /* Deep financial navy/slate */
-      --panel: #111820;
+      --bg: #070B11;
+      --panel: #0D131A;
       --text: #F8FAFC;
-      --accent: #10B981; /* Profit Green */
+      --accent: #10B981; 
       --border: rgba(255, 255, 255, 0.08);
       --spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
       --spring-soft: cubic-bezier(0.16, 1, 0.3, 1);
@@ -25,7 +25,8 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      overflow-x: hidden;
+      /* Use clip instead of hidden to prevent sticky scroll bugs on mobile */
+      overflow-x: clip; 
       scroll-behavior: smooth;
     }
 
@@ -33,9 +34,10 @@
     .font-mono { font-family: 'Space Mono', monospace; }
     ::selection { background-color: var(--accent); color: white; }
 
-    /* ─── FIXED 3D SCROLL ENGINE ─── */
+    /* ─── QUICK 3D SCROLL ENGINE ─── */
     .scroll-track {
-      height: 300vh;
+      /* Reduced from 300vh to 150vh. This makes the animation fast and punchy. */
+      height: 150vh;
       width: 100%;
       position: relative;
     }
@@ -51,7 +53,7 @@
       align-items: center;
       justify-content: center;
       background: var(--bg);
-      perspective: 1200px;
+      perspective: 1000px; /* Stronger 3D depth */
     }
 
     .hero-text-layer {
@@ -61,20 +63,20 @@
       z-index: 30;
       text-align: center;
       width: 100%;
-      will-change: opacity;
+      will-change: opacity, transform;
     }
 
     .hero-3d-image {
       position: absolute;
       top: 50%; left: 50%;
-      width: 90vw; max-width: 1200px; height: 65vh;
+      width: 90vw; max-width: 1000px; height: 60vh;
       transform: translate(-50%, -50%) rotateX(0deg) translateZ(0px) scale(1);
       transform-origin: center center;
       z-index: 20;
       border-radius: 16px;
       overflow: hidden;
       will-change: transform, opacity;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.9);
       border: 1px solid rgba(255,255,255,0.1);
     }
     
@@ -130,7 +132,6 @@
     .marquee-item { font-family: 'Space Mono', monospace; font-size: 0.8rem; text-transform: uppercase; padding-right: 3rem; display: flex; align-items: center; color: var(--accent); }
     @keyframes seamlessScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-    /* Map transition effects */
     .map-container iframe {
       transition: all 0.8s var(--spring-soft);
       filter: grayscale(100%) invert(100%) contrast(1.2) hue-rotate(180deg); 
@@ -140,7 +141,7 @@
 </head>
 <body>
 
-  <nav class="fixed w-full top-0 z-50 p-6 backdrop-blur-md bg-[#0A0F16]/80 border-b border-white/5 flex justify-between items-center">
+  <nav class="fixed w-full top-0 z-50 p-6 backdrop-blur-md bg-[#070B11]/80 border-b border-white/5 flex justify-between items-center">
     <div class="flex flex-col">
       <span class="font-serif text-2xl font-bold tracking-tight text-white leading-none">STEPHEN MALOUF</span>
       <span class="font-mono text-[9px] uppercase tracking-widest text-gray-400 mt-1">Montreal, QC</span>
@@ -167,14 +168,14 @@
 
       <div class="hero-3d-image" id="layer-image">
         <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80" alt="Accounting Ledger and Calculator">
-        <div class="absolute inset-0 bg-[#0A0F16]/40"></div>
+        <div class="absolute inset-0 bg-[#070B11]/40"></div>
       </div>
 
       <div class="scroll-wipe-text" id="layer-text-2">
         <h2 class="font-serif text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-2xl">
           Peace of mind.
         </h2>
-        <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light px-4 leading-relaxed">
+        <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light px-4 leading-relaxed drop-shadow-lg">
           You didn't start a business to spend your weekends staring at spreadsheets. My job is to get your finances in order so you can focus on growing your company.
         </p>
         <div class="mt-10 flex gap-4 justify-center">
@@ -185,11 +186,11 @@
     </div>
   </div>
 
-  <section id="about" class="py-32 px-6 bg-[#111820] relative z-20 border-t border-white/5">
+  <section id="about" class="py-32 px-6 bg-[#0D131A] relative z-20 border-t border-white/5">
     <div class="max-w-5xl mx-auto grid lg:grid-cols-12 gap-16 items-center fade-up">
       <div class="lg:col-span-4">
         <h2 class="font-serif text-5xl font-bold text-white leading-none">Who is <br><span class="italic text-gray-400">Stephen?</span></h2>
-        <p class="font-mono text-xs text-accent mt-4 uppercase tracking-widest">B.Comm — Concordia University</p>
+        <p class="font-mono text-xs text-accent mt-4 uppercase tracking-widest">B.Comm — Concordia</p>
       </div>
       <div class="lg:col-span-8 space-y-6 text-gray-300 leading-relaxed text-lg font-light border-l border-white/10 pl-8 md:pl-12">
         <p>I didn't start my career in a cubicle. Before I opened this accounting firm in 2008, I actually ran a business just like yours.</p>
@@ -199,7 +200,7 @@
     </div>
   </section>
 
-  <section class="py-16 px-6 bg-[#0A0F16] border-y border-white/5 relative z-20">
+  <section class="py-16 px-6 bg-[#070B11] border-y border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-sm fade-up">
       <div>
         <h4 class="font-mono text-accent uppercase tracking-widest mb-2 border-b border-white/10 pb-2">Trial Balance</h4>
@@ -216,7 +217,7 @@
     </div>
   </section>
 
-  <section id="services" class="py-32 px-6 bg-[#0A0F16] relative z-20">
+  <section id="services" class="py-32 px-6 bg-[#070B11] relative z-20">
     <div class="max-w-6xl mx-auto">
       <div class="mb-16 fade-up">
         <h2 class="font-serif text-5xl md:text-6xl font-bold tracking-tight">Simple, clear pricing.</h2>
@@ -294,7 +295,7 @@
     </div>
   </div>
 
-  <section class="py-32 px-6 bg-[#0A0F16] relative z-20">
+  <section class="py-32 px-6 bg-[#070B11] relative z-20">
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
       <div class="fade-up">
@@ -318,7 +319,7 @@
       <div class="fade-up" style="transition-delay: 0.2s;">
         <div class="glass-panel p-2 shadow-2xl relative map-container">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.660601550749!2d-73.5752946!3d45.5234907!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91bd419d80d27%3A0xc3f7a602fb239c09!2s4127%20Rue%20Saint-Christophe%2C%20Montr%C3%A9al%2C%20QC%20H2L%203Y1!5e0!3m2!1sen!2sca!4v1700000000000!5m2!1sen!2sca" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.660604177243!2d-73.57726462334812!3d45.516938929944664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a4b1ba0ce3d%3A0xe54e66699eb3cdd2!2s4127%20Rue%20Saint-Christophe%2C%20Montr%C3%A9al%2C%20QC%20H2L%203Y1!5e0!3m2!1sen!2sca!4v1716300000000!5e0!3m2!1sen!2sca" 
             width="100%" 
             height="450" 
             style="border:0;" 
@@ -333,7 +334,7 @@
     </div>
   </section>
 
-  <footer class="py-10 px-6 bg-[#05080C] border-t border-white/5 relative z-20">
+  <footer class="py-10 px-6 bg-[#030508] border-t border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6">
       <div class="font-serif text-xl font-bold text-white">Stephen Malouf.</div>
       <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
@@ -343,7 +344,7 @@
   </footer>
 
   <script>
-    /* ─── FIXED 3D SCROLL MATH ─── */
+    /* ─── PUNCHY & FAST 3D SCROLL MATH ─── */
     const track = document.getElementById('scroll-track');
     const text1 = document.getElementById('layer-text-1');
     const image = document.getElementById('layer-image');
@@ -351,32 +352,35 @@
 
     window.addEventListener('scroll', () => {
       const trackTop = track.offsetTop;
-      const trackHeight = track.offsetHeight;
-      const scrollY = window.scrollY;
+      // We subtract the window height so the animation perfectly completes exactly as the user hits the bottom of the track
+      const scrollDistance = track.offsetHeight - window.innerHeight; 
       
-      let progress = (scrollY - trackTop) / (trackHeight - window.innerHeight);
+      // Calculate progress (0.0 to 1.0)
+      let progress = (window.scrollY - trackTop) / scrollDistance;
       progress = Math.max(0, Math.min(1, progress));
 
-      // A) Fade out initial title
-      let text1Opacity = 1 - (progress * 5); 
+      // 1. Text 1 fades out immediately (completed by 30% scroll)
+      let text1Opacity = 1 - (progress * 3.33); 
       text1.style.opacity = Math.max(0, text1Opacity);
+      text1.style.transform = `translate(-50%, calc(-50% - ${progress * 50}px))`;
 
-      // B) 3D Image Transform
-      let imgRotateX = progress * 65; 
-      let imgTranslateZ = progress * -600; 
-      let imgScale = 1 + (progress * 0.4); 
-      let imgOpacity = 1 - (progress * 0.6); 
+      // 2. 3D Image Transform (Tilts dramatically back into the void)
+      let imgRotateX = progress * 70; // Hard tilt
+      let imgTranslateZ = progress * -800; // Deep push back
+      let imgScale = 1 + (progress * 0.2); 
+      let imgOpacity = 1 - (progress * 0.8); // Fades down heavily so the text takes over
 
       image.style.transform = `translate(-50%, -50%) rotateX(${imgRotateX}deg) translateZ(${imgTranslateZ}px) scale(${imgScale})`;
       image.style.opacity = imgOpacity;
 
-      // C) Text Wipe Up
-      if (progress > 0.4) {
-        let textProgress = (progress - 0.4) / 0.6;
-        let textY = 100 - (textProgress * 150); 
+      // 3. Text 2 Wipes Up into the center (starts at 20% scroll)
+      if (progress > 0.2) {
+        let textProgress = (progress - 0.2) / 0.8;
+        // Starts 50vh below center, moves to exact center
+        let textYOffset = 50 - (textProgress * 50); 
         
-        text2.style.transform = `translate(-50%, calc(-50% + ${100 - (textProgress * 100)}vh))`;
-        text2.style.opacity = textProgress * 2; 
+        text2.style.transform = `translate(-50%, calc(-50% + ${textYOffset}vh))`;
+        text2.style.opacity = textProgress * 1.5; 
       } else {
         text2.style.transform = `translate(-50%, 100vh)`;
         text2.style.opacity = 0;
