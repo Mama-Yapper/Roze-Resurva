@@ -3,421 +3,321 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ROZE BARBERSHOP | Local Laval Barber</title>
-  <meta name="description" content="Laval's neighborhood spot for tight fades, sharp line-ups, and classic hot towel shaves. Walk-ins welcome, or book online.">
+  <title>ROZE BARBERSHOP | 3D Experience</title>
+  <meta name="description" content="Laval's premium barbershop experience.">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💈</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --black: #050505;
-      --white: #F4F4F5;
-      --grey: #8A8A8A;
-      --border: rgba(255, 255, 255, 0.08);
-      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
-      --spring-soft: cubic-bezier(0.16, 1, 0.3, 1);
+      --bg: #050505;
+      --text: #F4F4F5;
+      --accent: #FF3366; /* A pop of color like the video */
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--black);
-      color: var(--white);
+      background-color: var(--bg);
+      color: var(--text);
+      /* Hide horizontal scrollbar */
       overflow-x: hidden;
+      /* Smooth scrolling for anchor links */
       scroll-behavior: smooth;
     }
 
-    /* Ambient Glowing Aurora Background */
-    body::before {
-      content: "";
-      position: fixed;
-      top: -20%; left: -10%; width: 50vw; height: 50vh;
-      background: radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%);
-      filter: blur(80px);
-      z-index: -2;
-      pointer-events: none;
-    }
-    
-    h1, h2, h3, .display-font { font-family: 'Syne', sans-serif; }
-    .editorial-italic { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; }
+    /* Custom Fonts for that high-end tech feel */
+    .font-display { font-family: 'Syncopate', sans-serif; }
 
-    ::selection { background-color: var(--white); color: var(--black); }
+    ::selection { background-color: var(--text); color: var(--bg); }
 
-    /* Micro-interaction: Magnetic Buttons */
-    .btn-premium {
-      background-color: var(--white); color: var(--black);
-      transition: all 0.4s var(--spring);
-      position: relative; overflow: hidden;
-    }
-    .btn-premium:hover {
-      background-color: #D4D4D4;
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(255,255,255,0.15);
+    /* ─── 3D SCROLL SETUP ─── */
+    .perspective-container {
+      perspective: 1500px;
+      transform-style: preserve-3d;
     }
 
-    .btn-outline {
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.02);
-      backdrop-filter: blur(10px);
-      color: var(--white);
-      transition: all 0.4s var(--spring);
-    }
-    .btn-outline:hover {
-      border-color: var(--white);
-      background-color: rgba(255,255,255,0.1);
-      transform: translateY(-4px);
+    .scroll-3d-item {
+      /* We will drive these variables with Javascript */
+      transform: translateZ(var(--z, 0px)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--s, 1));
+      transition: transform 0.1s linear; /* Tiny transition to smooth out the JS scroll updates */
+      will-change: transform;
     }
 
-    /* Glassmorphism Classes */
-    .glass-panel {
-      background: rgba(15, 15, 15, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+    /* ─── STICKY SECTIONS ─── */
+    .sticky-wrapper {
+      position: relative;
+      height: 300vh; /* Makes the user scroll for a while to see the animation */
     }
 
-    /* Spring Hover Images */
-    .image-mask { overflow: hidden; position: relative; border-radius: 16px; }
-    .image-mask img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.8s var(--spring), filter 0.8s ease;
-      filter: grayscale(40%) contrast(1.1);
-    }
-    .image-mask:hover img {
-      transform: scale(1.04);
-      filter: grayscale(0%) contrast(1.1);
+    .sticky-content {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .ig-post {
-      position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 1 / 1;
-      border: 1px solid var(--border);
-      transition: transform 0.4s var(--spring);
-    }
-    .ig-post:hover { transform: translateY(-8px); z-index: 10; box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
-    .ig-post img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--spring-soft), filter 0.6s ease; filter: grayscale(80%); }
-    .ig-post:hover img { transform: scale(1.05); filter: grayscale(0%); }
-    .ig-overlay {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.3s ease;
-    }
-    .ig-post:hover .ig-overlay { opacity: 1; }
-
-    /* Map transition effects */
-    .map-container iframe {
-      transition: all 0.8s var(--spring-soft);
-      filter: grayscale(100%) invert(90%) contrast(1.2); 
-    }
-    .map-container:hover iframe { filter: grayscale(0%) invert(0%) contrast(1); }
-
-    .menu-item {
-      padding: 30px; margin-bottom: 16px;
-      transition: all 0.4s var(--spring);
-    }
-    .menu-item:hover {
-      background: rgba(255,255,255,0.03);
-      transform: scale(1.01) translateX(10px);
-      border-color: rgba(255,255,255,0.2);
+    /* ─── IMAGE MASKS & FILTERS ─── */
+    .img-mask {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      filter: contrast(1.1) saturate(1.2);
     }
 
-    .marquee {
-      width: 100%; overflow: hidden; display: flex; padding: 3rem 0;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+    /* ─── TEXT REVEALS ─── */
+    .reveal-text {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
     }
-    .marquee-track { display: flex; flex-shrink: 0; animation: seamlessScroll 25s linear infinite; }
-    .marquee-item { font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 700; text-transform: uppercase; padding-right: 4rem; display: flex; align-items: center; color: var(--white); }
-    @keyframes seamlessScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+    .reveal-text span {
+      display: inline-block;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease;
+    }
+    .reveal-text.active span {
+      transform: translateY(0);
+      opacity: 1;
+    }
 
-    /* Motion Appear Effects */
-    .appear-up { opacity: 0; transform: translateY(40px); transition: all 1s var(--spring-soft); }
-    .appear-scale { opacity: 0; transform: scale(0.95) translateY(20px); transition: all 1s var(--spring); }
-    .active { opacity: 1; transform: translateY(0) scale(1); }
+    /* ─── BUTTONS ─── */
+    .btn-3d {
+      background: var(--text);
+      color: var(--bg);
+      padding: 16px 40px;
+      border-radius: 100px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+    .btn-3d:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(255,255,255,0.2);
+    }
   </style>
 </head>
-<body class="antialiased">
+<body>
 
-  <nav class="fixed w-full top-0 z-50 bg-[#050505]/70 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-[95%] mx-auto px-6 py-5 flex justify-between items-center">
-      <a href="#" class="flex flex-col group">
-        <span class="display-font text-2xl font-bold tracking-tighter uppercase leading-none group-hover:text-gray-300 transition-colors">ROZE</span>
-        <span class="text-[10px] uppercase tracking-[0.3em] text-gray-400 mt-1">Laval, QC</span>
-      </a>
-      
-      <div class="hidden md:flex gap-10 text-xs font-semibold uppercase tracking-[0.15em] text-gray-400">
-        <a href="#story" class="hover:text-white transition-colors">Our Story</a>
-        <a href="#services" class="hover:text-white transition-colors">Menu</a>
-        <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <a href="https://roze.resurva.com/book" target="_blank" class="text-xs uppercase font-bold tracking-[0.1em] bg-white text-black px-8 py-3.5 hover:bg-gray-200 hover:scale-105 transition-all duration-300 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-          Book a Chair
-        </a>
-      </div>
+  <nav class="fixed w-full top-0 z-50 p-6 mix-blend-difference flex justify-between items-center pointer-events-none">
+    <div class="font-display font-bold text-xl tracking-widest">ROZE.</div>
+    <div class="pointer-events-auto">
+      <a href="https://roze.resurva.com/book" target="_blank" class="btn-3d py-3 px-6 text-[10px]">Book Now</a>
     </div>
   </nav>
 
-  <header class="min-h-screen flex flex-col justify-center relative px-6 pt-20">
-    <div class="max-w-[95%] mx-auto w-full z-10">
-      <div class="grid lg:grid-cols-12 gap-12 items-center">
-        
-        <div class="lg:col-span-7 appear-up">
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-6 flex items-center gap-3">
-            <span class="w-8 h-[1px] bg-gray-400"></span>
-            No gimmicks, just good hair.
-          </p>
-          <h1 class="display-font text-[13vw] md:text-[7vw] leading-[0.9] font-bold uppercase tracking-tighter mb-8">
-            Laval's <br>
-            <span class="editorial-italic text-gray-400 normal-case font-normal">neighborhood</span> shop.
-          </h1>
-          <p class="text-lg font-light text-gray-300 max-w-md mb-12 leading-relaxed">
-            Tight fades, sharp line-ups, and hot towel shaves. Pull up, grab a coffee, and let us sort you out.
-          </p>
-          
-          <div class="flex flex-wrap gap-4">
-            <a href="https://roze.resurva.com/book" target="_blank" class="btn-premium px-10 py-4 text-sm font-bold uppercase tracking-widest rounded-full">
-              Grab an Appointment ↗
-            </a>
-            <a href="#services" class="btn-outline px-10 py-4 text-sm font-bold uppercase tracking-widest rounded-full">
-              Check Prices
-            </a>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 appear-scale hidden lg:block" style="transition-delay: 0.1s;">
-          <div class="glass-panel p-2 shadow-2xl shadow-white/5">
-            <div class="image-mask h-[600px]">
-              <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=80" alt="Roze Barbershop Interior">
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <section class="h-screen flex flex-col items-center justify-center relative perspective-container">
+    <div class="absolute inset-0 z-0 opacity-40">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=2000&q=80" alt="Background" class="w-full h-full object-cover img-bg-parallax">
     </div>
-  </header>
-
-  <section id="story" class="py-32 px-6 bg-black/50 border-t border-b border-white/5">
-    <div class="max-w-4xl mx-auto appear-up">
-      <h2 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6 text-center">Where we started</h2>
-      <h3 class="text-3xl md:text-5xl font-light leading-snug text-center mb-10">
-        "I started cutting hair in my parents' basement back in 2018. Now we're here on <span class="editorial-italic text-gray-400">Ch. du Souvenir</span>. Same attention to detail, just a nicer chair."
-      </h3>
-      <div class="flex items-center justify-center gap-4">
-        <div class="w-12 h-12 rounded-full overflow-hidden grayscale">
-          <img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?auto=format&fit=crop&w=100&q=80" alt="Roze" class="w-full h-full object-cover">
-        </div>
-        <div>
-          <p class="font-bold text-sm">Roze</p>
-          <p class="text-xs text-gray-500">Owner & Head Barber</p>
-        </div>
-      </div>
+    
+    <div class="z-10 text-center px-4">
+      <h1 class="font-display text-[15vw] md:text-[8vw] font-bold leading-none tracking-tighter uppercase reveal-text" id="hero-title">
+        <span>Powered</span> <br> <span>by Style.</span>
+      </h1>
+      <p class="mt-8 text-lg md:text-2xl font-light text-gray-400 tracking-wide reveal-text" id="hero-sub" style="transition-delay: 0.2s;">
+        <span>Laval's premium grooming experience.</span>
+      </p>
     </div>
   </section>
 
-  <section id="services" class="py-32 px-6 relative">
-    <div class="max-w-[95%] lg:max-w-5xl mx-auto">
+  <section class="sticky-wrapper perspective-container" id="seq-1">
+    <div class="sticky-content flex-col md:flex-row gap-12 px-6 md:px-20">
       
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16 appear-up">
-        <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">The Menu</p>
-          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter">Cuts & Shaves</h2>
-        </div>
-        <p class="text-sm text-gray-500 hidden md:block border-b border-gray-700 pb-1">Cash or Debit accepted in-store.</p>
-      </div>
-
-      <div class="w-full">
-        <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up">
-          <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Classic Haircut</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Standard fade, taper, or scissor cut. Finished with a hot towel to clean you up.</p>
-          </div>
-          <div class="mt-4 md:mt-0 flex items-center gap-4">
-            <span class="editorial-italic text-4xl text-white">$45</span>
-          </div>
-        </div>
-
-        <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.1s;">
-          <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Haircut & Beard</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">The full reset. Haircut plus a shaped beard trim and straight razor line-up on the cheeks and neck.</p>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-4xl text-white">$65</span>
-          </div>
-        </div>
-
-        <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.2s;">
-          <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Hot Towel Shave</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Old school straight razor shave. Hot steam towels, shaving cream lather, and aftershave balm.</p>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-4xl text-white">$40</span>
-          </div>
-        </div>
-
-        <div class="menu-item glass-panel flex flex-col md:flex-row justify-between items-center appear-up" style="transition-delay: 0.3s;">
-          <div class="md:w-2/3">
-            <h3 class="display-font text-2xl md:text-3xl uppercase font-bold tracking-tight mb-2">Line Up</h3>
-            <p class="text-gray-400 text-sm md:text-base font-light leading-relaxed max-w-xl">Just need the edges cleaned up? We'll hit the hairline and beard with the trimmers and razor. No fade included.</p>
-          </div>
-          <div class="mt-4 md:mt-0">
-            <span class="editorial-italic text-4xl text-white">$25</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="reviews" class="py-32 px-6 bg-[#080808] border-t border-white/5">
-    <div class="max-w-[95%] lg:max-w-6xl mx-auto">
-      <div class="text-center mb-16 appear-up">
-        <h2 class="display-font text-4xl md:text-5xl uppercase font-bold tracking-tighter">Word on the street</h2>
-        <p class="text-gray-400 mt-4">Actual reviews from the guys in Laval.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6 appear-up" style="transition-delay: 0.1s;">
-        <div class="glass-panel p-8">
-          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Roze hooked me up before my wedding. The fade was super clean. He was running about 10 minutes behind schedule because the guy before me was complicated, but the cut was 100% worth the wait."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Marc T.</p>
-        </div>
-        <div class="glass-panel p-8">
-          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Moved to Laval last year and tried 3 different shops before finding this one. Chill music, good vibes, and they don't rush you out of the chair. Highly recommend getting the beard trim too."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— David S.</p>
-        </div>
-        <div class="glass-panel p-8">
-          <div class="text-yellow-500 mb-4 text-sm">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Straight forward, no BS barbershop. I usually just get a standard scissor cut and they always listen to exactly what I ask for instead of just shaving it all off. Easy to book online too."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Kevin P.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="social" class="py-32 px-6 border-t border-white/5 bg-[#050505]">
-    <div class="max-w-[95%] lg:max-w-6xl mx-auto">
-      
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16 appear-up">
-        <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">The Work</p>
-          <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-2">Recent Cuts</h2>
-        </div>
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="mt-6 md:mt-0 btn-outline px-8 py-3 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-full">
-          <span>Follow @thelifeofroze</span>
-          <span>↗</span>
-        </a>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 appear-up" style="transition-delay: 0.1s;">
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post">
-          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Cut">
-        </a>
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.1s;">
-          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Work">
-        </a>
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.2s;">
-          <img src="https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Fade">
-        </a>
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="ig-post" style="transition-delay: 0.3s;">
-          <img src="https://images.unsplash.com/photo-1532710093739-9470acff878b?auto=format&fit=crop&w=600&q=80" alt="Roze Barbershop Detail">
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section id="location" class="py-32 px-6 bg-[#080808] border-t border-white/5">
-    <div class="max-w-[95%] lg:max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-      
-      <div class="appear-up">
-        <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-4">Location</p>
-        <h2 class="display-font text-5xl md:text-6xl uppercase font-bold tracking-tighter mb-8">Drop By.</h2>
-        <p class="text-lg font-light text-gray-300 max-w-md mb-8 leading-relaxed">
-          We're located in the heart of Laval. Walk-ins are welcome if we have an open chair, but booking ahead guarantees your spot. 
+      <div class="w-full md:w-1/2 z-20">
+        <h2 class="font-display text-4xl md:text-7xl font-bold uppercase tracking-tighter leading-tight seq-1-text opacity-0 translate-y-10 transition-all duration-500">
+          Not just <br>a haircut.
+        </h2>
+        <p class="mt-6 text-xl text-gray-400 max-w-md seq-1-text opacity-0 translate-y-10 transition-all duration-500 delay-100">
+          It's the result of uncompromising precision, hot towels, and an atmosphere built for the modern gentleman.
         </p>
-        
-        <div class="space-y-6 text-xl font-light text-gray-200 mb-12 border-l border-gray-800 pl-6">
-          <p>4629 Ch. du Souvenir<br>Laval, QC H7W 1C5</p>
-        </div>
-
-        <a href="https://maps.google.com/?q=4629+Chem.+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="btn-outline px-8 py-4 text-xs font-bold uppercase tracking-widest inline-flex items-center gap-3 rounded-full">
-          Get Directions ↗
-        </a>
       </div>
 
-      <div class="appear-scale" style="transition-delay: 0.2s;">
-        <div class="map-container p-2 glass-panel relative group shadow-2xl shadow-black">
-           <iframe src="https://maps.google.com/maps?q=4629%20Chem.%20du%20Souvenir,%20Laval,%20QC%20H7W%201C5&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-             width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-xl">
-           </iframe>
+      <div class="w-full md:w-1/2 h-[50vh] md:h-[70vh] relative z-10 flex items-center justify-center">
+        <div class="w-full max-w-md h-[400px] md:h-[600px] scroll-3d-item seq-1-img" style="--z: -500px; --rx: 20deg; --ry: -30deg;">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=80" alt="Fade Cut" class="img-mask ring-1 ring-white/10">
         </div>
       </div>
 
     </div>
   </section>
 
-  <footer class="bg-[#030303] pt-24 pb-10 px-6 border-t border-white/5">
-    <div class="max-w-[95%] mx-auto grid md:grid-cols-2 gap-16 mb-24 appear-up">
+  <section class="sticky-wrapper perspective-container" id="seq-2">
+    <div class="sticky-content bg-[#111]">
       
-      <div>
-        <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">Shop Hours</h4>
-        <ul class="text-base font-light text-gray-300 space-y-4 max-w-sm">
-          <li class="flex justify-between border-b border-gray-900 pb-2"><span>Mon - Fri</span> <span>9:00 AM - 7:00 PM</span></li>
-          <li class="flex justify-between border-b border-gray-900 pb-2"><span>Saturday</span> <span>9:00 AM - 5:00 PM</span></li>
-          <li class="flex justify-between text-gray-600 pb-2"><span>Sunday</span> <span>Closed (Family Day)</span></li>
-        </ul>
+      <div class="absolute inset-0 z-0 scroll-3d-item seq-2-bg" style="--s: 1.5; opacity: 0.3;">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=2000&q=80" alt="Barber Tools" class="w-full h-full object-cover">
       </div>
 
-      <div class="md:text-right flex flex-col md:items-end justify-between">
-        <div>
-          <h4 class="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">Links</h4>
-          <div class="flex flex-col md:items-end gap-3 text-base font-light text-gray-300">
-            <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="hover:text-white transition-colors">Follow the Shop</a>
-            <a href="https://roze.resurva.com/book" target="_blank" class="hover:text-white transition-colors">Book an Appointment</a>
+      <div class="z-10 text-center max-w-4xl px-6">
+        <p class="text-accent font-bold tracking-[0.3em] uppercase text-sm mb-6 seq-2-text opacity-0 transition-all duration-700">Precision Engineering</p>
+        <h2 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tighter leading-none seq-2-text opacity-0 transition-all duration-700 delay-100">
+          Grip-Locked <br> Technology.
+        </h2>
+        <p class="mt-8 text-xl text-gray-300 seq-2-text opacity-0 transition-all duration-700 delay-200">
+          Or as we call it: Holding a straight razor really, really steady.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="py-32 px-6 bg-black relative z-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-20">
+        <h2 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter reveal-text hook-reveal"><span>The Services</span></h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        
+        <div class="bg-[#111] p-10 rounded-3xl border border-white/5 hover:border-white/20 transition-colors group">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Classic Cut</h3>
+            <span class="text-2xl font-light">$45</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-8">Standard fade, taper, or scissor cut. Finished with a hot towel to clean you up.</p>
+          <div class="w-full h-48 overflow-hidden rounded-xl">
+             <img src="https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
           </div>
         </div>
+
+        <div class="bg-[#111] p-10 rounded-3xl border border-white/5 hover:border-white/20 transition-colors group">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Cut & Beard</h3>
+            <span class="text-2xl font-light">$65</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-8">The full reset. Haircut plus a shaped beard trim and straight razor line-up.</p>
+          <div class="w-full h-48 overflow-hidden rounded-xl">
+             <img src="https://images.unsplash.com/photo-1532710093739-9470acff878b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          </div>
+        </div>
+
       </div>
-
     </div>
+  </section>
 
-    <div class="max-w-[95%] mx-auto flex flex-col md:flex-row justify-between items-center text-center border-t border-gray-900 pt-8 appear-up">
-      <p class="text-[10px] uppercase tracking-[0.2em] text-gray-500">© 2026 ROZE BARBERSHOP.</p>
-      
-      <a href="#" class="text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mt-4 md:mt-0 hover:text-white transition-colors flex items-center gap-2">
-        <span>Coded by NETSites</span>
-      </a>
+  <section class="h-screen flex flex-col items-center justify-center bg-black relative overflow-hidden">
+    <div class="z-10 text-center px-4">
+      <h2 class="font-display text-[12vw] font-bold uppercase tracking-tighter leading-none hover:text-gray-300 transition-colors cursor-pointer reveal-text hook-reveal">
+        <a href="https://roze.resurva.com/book" target="_blank"><span>Book</span> <br> <span>Now.</span></a>
+      </h2>
+      <p class="mt-12 text-sm text-gray-500 uppercase tracking-[0.3em] font-bold">
+        4629 Ch. du Souvenir, Laval
+      </p>
+      <p class="mt-4 text-[10px] text-gray-700 uppercase tracking-widest">
+        Coded by NETSites
+      </p>
     </div>
-  </footer>
+  </section>
 
   <script>
-    // Smooth Scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        });
+    /* ─── VANILLA JS SCROLL ENGINE ─── */
+    // This script calculates how far you scroll through specific sections
+    // and applies that math to CSS variables to create 3D hardware-accelerated animations.
+
+    // 1. Initial Load Reveals
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.getElementById('hero-title').classList.add('active');
+      }, 100);
+      setTimeout(() => {
+        document.getElementById('hero-sub').classList.add('active');
+      }, 300);
     });
 
-    // Intersection Observer for organic appear effects
+    // 2. Intersection Observer for standard reveals
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          observer.unobserve(entry.target); 
         }
       });
-    }, { 
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.hook-reveal').forEach(el => observer.observe(el));
 
-    document.querySelectorAll('.appear-up, .appear-scale').forEach((el) => {
-      observer.observe(el);
+
+    // 3. The 3D Scroll Math
+    window.addEventListener('scroll', () => {
+      let scrollY = window.scrollY;
+
+      // Hero Parallax
+      const heroBg = document.querySelector('.img-bg-parallax');
+      if (scrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrollY * 0.4}px) scale(${1 + scrollY * 0.0005})`;
+      }
+
+      // Sequence 1: 3D Floating Phone/Card Effect
+      const seq1 = document.getElementById('seq-1');
+      if (seq1) {
+        const rect = seq1.getBoundingClientRect();
+        // Calculate progress from 0 to 1 inside this specific sticky section
+        let progress = (window.innerHeight - rect.top) / (rect.height);
+        progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
+
+        const img = document.querySelector('.seq-1-img');
+        const texts = document.querySelectorAll('.seq-1-text');
+
+        // Math mapping: As progress goes 0 -> 1, change rotation and Z depth
+        if (progress > 0 && progress < 1) {
+          // Bring forward and straighten out
+          let z = -500 + (progress * 500); 
+          let rx = 20 - (progress * 20);
+          let ry = -30 + (progress * 30);
+          
+          img.style.setProperty('--z', `${z}px`);
+          img.style.setProperty('--rx', `${rx}deg`);
+          img.style.setProperty('--ry', `${ry}deg`);
+
+          // Fade in text halfway through
+          if (progress > 0.3) {
+            texts.forEach(t => {
+              t.style.opacity = '1';
+              t.style.transform = 'translateY(0)';
+            });
+          } else {
+            texts.forEach(t => {
+              t.style.opacity = '0';
+              t.style.transform = 'translateY(40px)';
+            });
+          }
+        }
+      }
+
+      // Sequence 2: Full Screen Wipe / Scale Down
+      const seq2 = document.getElementById('seq-2');
+      if (seq2) {
+        const rect = seq2.getBoundingClientRect();
+        let progress = (window.innerHeight - rect.top) / (rect.height);
+        progress = Math.max(0, Math.min(1, progress));
+
+        const bg = document.querySelector('.seq-2-bg');
+        const texts = document.querySelectorAll('.seq-2-text');
+
+        if (progress > 0 && progress < 1) {
+          // Scale background down from 1.5 to 1
+          let s = 1.5 - (progress * 0.5);
+          bg.style.setProperty('--s', s);
+
+          if (progress > 0.4) {
+            texts.forEach(t => {
+              t.style.opacity = '1';
+              t.style.transform = 'translateY(0) scale(1)';
+            });
+          } else {
+            texts.forEach(t => {
+              t.style.opacity = '0';
+              t.style.transform = 'translateY(20px) scale(0.95)';
+            });
+          }
+        }
+      }
     });
   </script>
 </body>
