@@ -12,7 +12,7 @@
   
   <style>
     :root {
-      --bg: #000000;
+      --bg: #030303;
       --text: #F4F4F5;
       --accent: #FFFFFF;
     }
@@ -28,9 +28,20 @@
     .font-display { font-family: 'Syncopate', sans-serif; }
     ::selection { background-color: var(--text); color: var(--bg); }
 
-    /* ─── FIXED 3D SCROLL ENGINE (Sticky Method) ─── */
+    /* ─── AMBIENT GLOW ─── */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -20%; left: -10%; width: 50vw; height: 50vh;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+      filter: blur(80px);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* ─── FIXED 3D SCROLL ENGINE ─── */
     .scroll-track {
-      height: 300vh;
+      height: 150vh; /* Fast, punchy scroll */
       width: 100%;
       position: relative;
     }
@@ -49,31 +60,17 @@
       perspective: 1200px;
     }
 
-    .hero-text-layer {
+    /* The Main 3D Text (Replaces the image) */
+    .hero-3d-text {
       position: absolute;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 30;
-      text-align: center;
       width: 100%;
-      will-change: opacity;
-    }
-
-    .hero-3d-image {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 90vw; max-width: 1200px; height: 60vh;
+      text-align: center;
       transform: translate(-50%, -50%) rotateX(0deg) translateZ(0px) scale(1);
       transform-origin: center center;
       z-index: 20;
-      border-radius: 24px;
-      overflow: hidden;
       will-change: transform, opacity;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-    }
-    
-    .hero-3d-image img {
-      width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.1);
+      text-shadow: 0 20px 60px rgba(255, 255, 255, 0.15);
     }
 
     .scroll-wipe-text {
@@ -87,101 +84,98 @@
       will-change: transform, opacity;
     }
 
-    /* ─── DUAL SCROLL GUIDES ─── */
+    /* ─── DUAL NEON SCROLL GUIDES ─── */
     .scroll-guide {
       position: absolute;
-      bottom: 40px;
+      bottom: 6vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       z-index: 50;
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
     
-    /* Position them on both sides */
-    .scroll-guide.left { left: 40px; }
-    .scroll-guide.right { right: 40px; }
+    .scroll-guide.left { left: 5vw; }
+    .scroll-guide.right { right: 5vw; }
 
     .scroll-text {
       font-family: 'Inter', sans-serif;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      /* Rotate text to fit the vertical space nicely */
+      color: var(--accent);
+      opacity: 0.9;
       writing-mode: vertical-rl;
       text-orientation: mixed;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
     .scroll-line-container {
-      width: 1px;
-      height: 60px;
+      width: 2px;
+      height: 100px;
       background-color: rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
+      border-radius: 2px;
     }
 
-    /* The dropping light animation */
+    /* Lively dropping light animation */
     .scroll-line-container::after {
       content: '';
       position: absolute;
       top: -100%;
       left: 0;
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent, #fff, #fff, transparent);
-      animation: dualScrollDrop 2s ease-in-out infinite;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(to bottom, transparent, #fff, #fff);
+      animation: livelyDrop 1.5s cubic-bezier(0.8, 0, 0.2, 1) infinite;
+      box-shadow: 0 0 15px #fff;
     }
 
-    @keyframes dualScrollDrop {
-      0% { top: -100%; opacity: 0; }
-      20% { opacity: 1; }
-      80% { opacity: 1; }
-      100% { top: 100%; opacity: 0; }
+    @keyframes livelyDrop {
+      0% { top: -50%; opacity: 0; }
+      50% { opacity: 1; }
+      100% { top: 150%; opacity: 0; }
     }
 
-    /* Hide on very small screens to avoid UI clutter */
     @media (max-width: 768px) {
       .scroll-guide.left { display: none; }
       .scroll-guide.right { right: 20px; }
+      .scroll-line-container { height: 70px; }
+    }
+    @media (max-height: 600px) {
+      .scroll-guide { display: none; }
     }
 
     /* ─── STANDARD UI ELEMENTS ─── */
     .btn-3d {
       background: var(--text); color: var(--bg);
-      padding: 16px 40px; border-radius: 100px;
-      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px;
+      padding: 18px 48px; border-radius: 100px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 13px;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-block;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
-    .btn-3d:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 40px rgba(255,255,255,0.2); }
+    .btn-3d:hover { 
+      transform: translateY(-5px) scale(1.02); 
+      box-shadow: 0 20px 40px rgba(255,255,255,0.25); 
+    }
 
     .glass-panel {
-      background: rgba(20, 20, 20, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
+      background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+    .glass-panel:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.3);
     }
     
     .fade-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .fade-up.active { opacity: 1; transform: translateY(0); }
-
-    /* Resurva Widget Container Styling */
-    .resurva-container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      background: #ffffff; /* Most booking widgets have white backgrounds */
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    }
-    .resurva-container iframe {
-      width: 100%;
-      height: 600px; /* Adjust based on Resurva's actual height requirements */
-      border: none;
-    }
   </style>
 </head>
 <body>
@@ -196,15 +190,11 @@
   <div class="scroll-track" id="scroll-track">
     <div class="sticky-stage">
       
-      <div class="hero-text-layer" id="layer-text-1">
-        <h1 class="font-display text-[12vw] md:text-[8vw] font-bold leading-none tracking-tighter uppercase text-white drop-shadow-2xl">
-          Precision.
+      <div class="hero-3d-text" id="layer-text-1">
+        <p class="text-xs uppercase tracking-[0.3em] text-gray-400 mb-6 font-bold">Laval, QC</p>
+        <h1 class="font-display text-[18vw] md:text-[15vw] font-bold leading-none tracking-tighter uppercase text-white">
+          ROZE.
         </h1>
-      </div>
-
-      <div class="hero-3d-image" id="layer-image">
-        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1600&q=80" alt="Roze Barbershop Studio">
-        <div class="absolute inset-0 bg-black/40"></div>
       </div>
 
       <div class="scroll-wipe-text" id="layer-text-2">
@@ -228,15 +218,15 @@
     </div>
   </div>
 
-  <section id="services" class="py-32 px-6 bg-[#030303] border-t border-white/5 relative z-20">
+  <section id="services" class="py-32 px-6 bg-[#050505] border-t border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto">
       <div class="mb-20 fade-up">
         <h2 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter">The Menu</h2>
-        <p class="text-sm text-gray-500 mt-4 uppercase tracking-widest">Card & Cash Accepted</p>
+        <p class="text-sm text-gray-500 mt-4 uppercase tracking-widest">Card & Cash Accepted in Shop</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+        <div class="glass-panel p-10 fade-up">
           <div class="flex justify-between items-start mb-6">
             <h3 class="font-display text-2xl font-bold uppercase">Classic Cut</h3>
             <span class="text-2xl font-light">$45</span>
@@ -244,7 +234,7 @@
           <p class="text-gray-400 leading-relaxed mb-8">Standard fade, taper, or scissor cut. Finished with a hot towel and fresh styling.</p>
         </div>
 
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+        <div class="glass-panel p-10 fade-up" style="transition-delay: 0.1s;">
           <div class="flex justify-between items-start mb-6">
             <h3 class="font-display text-2xl font-bold uppercase">Cut & Beard</h3>
             <span class="text-2xl font-light">$65</span>
@@ -252,7 +242,7 @@
           <p class="text-gray-400 leading-relaxed mb-8">The full package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
         </div>
 
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+        <div class="glass-panel p-10 fade-up">
           <div class="flex justify-between items-start mb-6">
             <h3 class="font-display text-2xl font-bold uppercase">Hot Towel Shave</h3>
             <span class="text-2xl font-light">$40</span>
@@ -260,7 +250,7 @@
           <p class="text-gray-400 leading-relaxed mb-8">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
         </div>
 
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+        <div class="glass-panel p-10 fade-up" style="transition-delay: 0.1s;">
           <div class="flex justify-between items-start mb-6">
             <h3 class="font-display text-2xl font-bold uppercase">Line Up</h3>
             <span class="text-2xl font-light">$25</span>
@@ -271,19 +261,45 @@
     </div>
   </section>
 
-  <section id="booking" class="py-32 px-6 bg-[#050505] border-t border-white/5 relative z-20">
-    <div class="max-w-4xl mx-auto text-center">
-      <div class="mb-16 fade-up">
-        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Secure Your Spot</h2>
-        <p class="text-gray-400 mt-4 text-sm">Select your service and time directly below.</p>
+  <section id="reviews" class="py-32 px-6 bg-[#030303] border-t border-white/5 relative z-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-20 fade-up">
+        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Client Reviews</h2>
+        <p class="text-gray-400 mt-4 uppercase tracking-widest text-sm">Verified on Google</p>
       </div>
 
-      <div class="fade-up resurva-container" style="transition-delay: 0.2s;">
-        <iframe 
-          src="https://roze.resurva.com/book?embed=true" 
-          title="Resurva Booking Widget">
-        </iframe>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-panel p-8 fade-up">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Very professional shop. The shop is clean, the atmosphere is great, and they take their time with the cuts. Booking online makes it super easy to get in and out."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
+        
+        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.1s;">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Best fade in Laval. Have been going here for months. Great attention to detail and they always make sure the beard line up is perfectly straight. Highly recommend."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
+        
+        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.2s;">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Finally found a barber who listens. I asked for a specific style and he delivered perfectly. The hot towel at the end is a great touch. Will definitely be returning."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section id="booking" class="py-32 px-6 bg-[#080808] border-t border-white/5 relative z-20 text-center">
+    <div class="max-w-4xl mx-auto fade-up">
+      <h2 class="font-display text-5xl md:text-7xl uppercase font-bold tracking-tighter mb-8">Secure Your Spot.</h2>
+      <p class="text-lg text-gray-400 mb-12 max-w-lg mx-auto">
+        Due to platform security restrictions, booking is handled directly through our verified Resurva portal. Select your service and time instantly.
+      </p>
+      
+      <a href="https://roze.resurva.com/book" target="_blank" class="btn-3d text-lg py-5 px-12">
+        Open Booking Portal ↗
+      </a>
     </div>
   </section>
 
@@ -291,12 +307,12 @@
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
       <div class="fade-up text-center lg:text-left">
-        <div class="space-y-2">
+        <div class="space-y-2 mb-10">
           <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">4629 Ch. du Souvenir</p>
           <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">Laval, QC H7W 1C5</p>
         </div>
 
-        <div class="mt-8 flex gap-6 justify-center lg:justify-start">
+        <div class="flex gap-6 justify-center lg:justify-start">
           <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Instagram</a>
           <a href="https://maps.google.com/maps?q=4629%20Chem.%20du%20Souvenir,%20Laval,%20QC%20H7W%201C5&t=&z=15&ie=UTF8&iwloc=&output=embed" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
         </div>
@@ -307,7 +323,7 @@
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2793.187383610991!2d-73.76632462334887!3d45.56667952796127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92318cf1b37b5%3A0xc3c5b8bbaafc0a87!2s4629%20Chem.%20du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1715000000000!5m2!1sen!2sca" 
             width="100%" 
-            height="400" 
+            height="350" 
             style="border:0;" 
             allowfullscreen="" 
             loading="lazy" 
@@ -327,45 +343,39 @@
   </section>
 
   <script>
-    /* ─── FIXED 3D SCROLL MATH ─── */
+    /* ─── TYPOGRAPHY 3D SCROLL MATH ─── */
     const track = document.getElementById('scroll-track');
     const text1 = document.getElementById('layer-text-1');
-    const image = document.getElementById('layer-image');
     const text2 = document.getElementById('layer-text-2');
     const scrollGuides = document.querySelectorAll('.scroll-guide');
 
     window.addEventListener('scroll', () => {
       const trackTop = track.offsetTop;
-      const trackHeight = track.offsetHeight;
-      const scrollY = window.scrollY;
+      const scrollDistance = track.offsetHeight - window.innerHeight; 
       
-      let progress = (scrollY - trackTop) / (trackHeight - window.innerHeight);
+      let progress = (window.scrollY - trackTop) / scrollDistance;
       progress = Math.max(0, Math.min(1, progress));
 
-      // Fade out both scroll guides instantly when user starts scrolling
+      // Fade out both neon scroll guides instantly when user starts scrolling
       scrollGuides.forEach(guide => {
-        guide.style.opacity = Math.max(0, 1 - (progress * 10));
+        guide.style.opacity = Math.max(0, 1 - (progress * 8));
       });
 
-      // A) Fade out initial title
-      let text1Opacity = 1 - (progress * 5); 
+      // 1. Text 1 3D Transform (Tilts dramatically back, pushes deep, and scales up)
+      let text1RotateX = progress * 70; 
+      let text1TranslateZ = progress * -800; 
+      let text1Scale = 1 + (progress * 0.4); 
+      let text1Opacity = 1 - (progress * 1.5); 
+
+      text1.style.transform = `translate(-50%, -50%) rotateX(${text1RotateX}deg) translateZ(${text1TranslateZ}px) scale(${text1Scale})`;
       text1.style.opacity = Math.max(0, text1Opacity);
 
-      // B) 3D Image Transform
-      let imgRotateX = progress * 65; 
-      let imgTranslateZ = progress * -600; 
-      let imgScale = 1 + (progress * 0.4); 
-      let imgOpacity = 1 - (progress * 0.5); 
-
-      image.style.transform = `translate(-50%, -50%) rotateX(${imgRotateX}deg) translateZ(${imgTranslateZ}px) scale(${imgScale})`;
-      image.style.opacity = imgOpacity;
-
-      // C) Text Wipe Up
-      if (progress > 0.4) {
-        let textProgress = (progress - 0.4) / 0.6;
-        let textY = 100 - (textProgress * 150); 
-        text2.style.transform = `translate(-50%, calc(-50% + ${100 - (textProgress * 100)}vh))`;
-        text2.style.opacity = textProgress * 2; 
+      // 2. Text 2 Wipes Up into the center
+      if (progress > 0.15) {
+        let textProgress = (progress - 0.15) / 0.85;
+        let textYOffset = 50 - (textProgress * 50); 
+        text2.style.transform = `translate(-50%, calc(-50% + ${textYOffset}vh))`;
+        text2.style.opacity = textProgress * 1.5; 
       } else {
         text2.style.transform = `translate(-50%, 100vh)`;
         text2.style.opacity = 0;
