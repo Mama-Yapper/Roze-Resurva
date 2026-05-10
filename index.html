@@ -3,46 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stephen Malouf | Montreal Accountant</title>
-  <meta name="description" content="Montreal accountant specializing in small business, year-end corporate tax, and monthly bookkeeping.">
+  <title>ROZE BARBERSHOP | Laval</title>
+  <meta name="description" content="Premium cuts and shaves in Laval.">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💈</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg: #070B11;
-      --panel: #0D131A;
-      --text: #F8FAFC;
-      --accent: #10B981; 
-      --border: rgba(255, 255, 255, 0.08);
-      --spring: cubic-bezier(0.175, 0.885, 0.32, 1.15);
-      --spring-soft: cubic-bezier(0.16, 1, 0.3, 1);
+      --bg: #000000;
+      --text: #F4F4F5;
+      --accent: #FFFFFF;
     }
 
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      /* Use clip instead of hidden to prevent sticky scroll bugs on mobile */
-      overflow-x: clip; 
+      overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    .font-serif { font-family: 'Instrument Serif', serif; }
-    .font-mono { font-family: 'Space Mono', monospace; }
-    ::selection { background-color: var(--accent); color: white; }
+    .font-display { font-family: 'Syncopate', sans-serif; }
+    ::selection { background-color: var(--text); color: var(--bg); }
 
-    /* ─── QUICK 3D SCROLL ENGINE ─── */
+    /* ─── FIXED 3D SCROLL ENGINE (Sticky Method) ─── */
     .scroll-track {
-      /* Reduced from 300vh to 150vh. This makes the animation fast and punchy. */
-      height: 150vh;
+      /* Gives you room to scroll for the animation to play out */
+      height: 300vh;
       width: 100%;
       position: relative;
     }
 
     .sticky-stage {
+      /* Sticks to the screen while you scroll down the track */
       position: sticky;
       top: 0; 
       width: 100%; 
@@ -53,7 +48,7 @@
       align-items: center;
       justify-content: center;
       background: var(--bg);
-      perspective: 1000px; /* Stronger 3D depth */
+      perspective: 1200px; /* 3D depth applied here */
     }
 
     .hero-text-layer {
@@ -63,34 +58,36 @@
       z-index: 30;
       text-align: center;
       width: 100%;
-      will-change: opacity, transform;
+      will-change: opacity;
     }
 
     .hero-3d-image {
       position: absolute;
       top: 50%; left: 50%;
-      width: 90vw; max-width: 1000px; height: 60vh;
+      width: 90vw; max-width: 1200px; height: 60vh;
+      /* Initial state */
       transform: translate(-50%, -50%) rotateX(0deg) translateZ(0px) scale(1);
       transform-origin: center center;
       z-index: 20;
-      border-radius: 16px;
+      border-radius: 24px;
       overflow: hidden;
       will-change: transform, opacity;
       box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-      border: 1px solid rgba(255,255,255,0.1);
     }
     
     .hero-3d-image img {
-      width: 100%; height: 100%; object-fit: cover; filter: grayscale(50%) contrast(1.1);
+      width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.1);
     }
 
     .scroll-wipe-text {
       position: absolute;
+      /* Using top/left center so we can translate exactly where it goes */
       top: 50%; left: 50%;
       width: 100%;
       text-align: center;
       z-index: 40;
       opacity: 0;
+      /* Start it off-screen at the bottom */
       transform: translate(-50%, 100vh);
       will-change: transform, opacity;
     }
@@ -98,61 +95,28 @@
     /* ─── STANDARD UI ELEMENTS ─── */
     .btn-3d {
       background: var(--text); color: var(--bg);
-      padding: 14px 32px; border-radius: 4px;
-      font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;
-      transition: all 0.4s var(--spring);
-      display: inline-flex; align-items: center; gap: 8px;
+      padding: 16px 40px; border-radius: 100px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
     }
-    .btn-3d:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255,255,255,0.15); background: var(--accent); color: white; }
-
-    .btn-outline {
-      border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.02);
-      backdrop-filter: blur(10px); color: var(--text);
-      padding: 14px 32px; border-radius: 4px;
-      font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 12px;
-      transition: all 0.4s var(--spring);
-    }
-    .btn-outline:hover { border-color: var(--accent); background-color: rgba(16, 185, 129, 0.1); color: var(--accent); transform: translateY(-3px); }
+    .btn-3d:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 40px rgba(255,255,255,0.2); }
 
     .glass-panel {
-      background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-      transition: transform 0.4s var(--spring), border-color 0.4s ease;
+      background: rgba(20, 20, 20, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
     }
-    .glass-panel:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-5px); }
     
     .fade-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .fade-up.active { opacity: 1; transform: translateY(0); }
-
-    .marquee {
-      width: 100%; overflow: hidden; display: flex; padding: 1.5rem 0;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      background: var(--panel);
-    }
-    .marquee-track { display: flex; flex-shrink: 0; animation: seamlessScroll 30s linear infinite; }
-    .marquee-item { font-family: 'Space Mono', monospace; font-size: 0.8rem; text-transform: uppercase; padding-right: 3rem; display: flex; align-items: center; color: var(--accent); }
-    @keyframes seamlessScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
-
-    .map-container iframe {
-      transition: all 0.8s var(--spring-soft);
-      filter: grayscale(100%) invert(100%) contrast(1.2) hue-rotate(180deg); 
-    }
-    .map-container:hover iframe { filter: grayscale(0%) invert(0%) contrast(1) hue-rotate(0deg); }
   </style>
 </head>
 <body>
 
-  <nav class="fixed w-full top-0 z-50 p-6 backdrop-blur-md bg-[#070B11]/80 border-b border-white/5 flex justify-between items-center">
-    <div class="flex flex-col">
-      <span class="font-serif text-2xl font-bold tracking-tight text-white leading-none">STEPHEN MALOUF</span>
-      <span class="font-mono text-[9px] uppercase tracking-widest text-gray-400 mt-1">Montreal, QC</span>
-    </div>
-    <div class="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-widest text-gray-400">
-      <a href="#about" class="hover:text-white transition-colors">Background</a>
-      <a href="#services" class="hover:text-white transition-colors">Accounting</a>
-      <a href="#bookkeeping" class="hover:text-white transition-colors">Bookkeeping</a>
-    </div>
-    <div>
-      <a href="mailto:stephen@stephenmalouf.com" class="btn-3d py-3 px-6 text-[10px]">Contact</a>
+  <nav class="fixed w-full top-0 z-50 p-6 mix-blend-difference flex justify-between items-center pointer-events-none">
+    <div class="font-display font-bold text-xl tracking-widest text-white">ROZE.</div>
+    <div class="pointer-events-auto">
+      <a href="https://roze.resurva.com/book" target="_blank" class="btn-3d py-3 px-6 text-[10px]">Book Now</a>
     </div>
   </nav>
 
@@ -160,228 +124,201 @@
     <div class="sticky-stage">
       
       <div class="hero-text-layer" id="layer-text-1">
-        <p class="font-mono text-accent text-sm tracking-widest uppercase mb-4 drop-shadow-md">Accountant & Tax Advisor</p>
-        <h1 class="font-serif text-[12vw] md:text-[9vw] font-bold leading-none tracking-tight text-white drop-shadow-2xl">
-          Real business. <br> <span class="italic text-gray-400">Real math.</span>
+        <h1 class="font-display text-[12vw] md:text-[8vw] font-bold leading-none tracking-tighter uppercase text-white drop-shadow-2xl">
+          Precision.
         </h1>
       </div>
 
       <div class="hero-3d-image" id="layer-image">
-        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80" alt="Accounting Ledger and Calculator">
-        <div class="absolute inset-0 bg-[#070B11]/40"></div>
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1600&q=80" alt="Roze Barbershop Studio">
+        <div class="absolute inset-0 bg-black/40"></div>
       </div>
 
       <div class="scroll-wipe-text" id="layer-text-2">
-        <h2 class="font-serif text-5xl md:text-7xl font-bold tracking-tight text-white drop-shadow-2xl">
-          Peace of mind.
+        <h2 class="font-display text-4xl md:text-7xl font-bold uppercase tracking-tighter leading-tight text-white drop-shadow-2xl">
+          More than <br>a haircut.
         </h2>
-        <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light px-4 leading-relaxed drop-shadow-lg">
-          You didn't start a business to spend your weekends staring at spreadsheets. My job is to get your finances in order so you can focus on growing your company.
+        <p class="mt-6 text-xl text-gray-400 max-w-lg mx-auto font-light px-4">
+          Laval's dedicated grooming studio. Clean lines, hot towels, and an atmosphere built for the modern gentleman.
         </p>
-        <div class="mt-10 flex gap-4 justify-center">
-          <a href="#services" class="btn-3d">View Services</a>
-        </div>
       </div>
 
     </div>
   </div>
 
-  <section id="about" class="py-32 px-6 bg-[#0D131A] relative z-20 border-t border-white/5">
-    <div class="max-w-5xl mx-auto grid lg:grid-cols-12 gap-16 items-center fade-up">
-      <div class="lg:col-span-4">
-        <h2 class="font-serif text-5xl font-bold text-white leading-none">Who is <br><span class="italic text-gray-400">Stephen?</span></h2>
-        <p class="font-mono text-xs text-accent mt-4 uppercase tracking-widest">B.Comm — Concordia</p>
-      </div>
-      <div class="lg:col-span-8 space-y-6 text-gray-300 leading-relaxed text-lg font-light border-l border-white/10 pl-8 md:pl-12">
-        <p>I didn't start my career in a cubicle. Before I opened this accounting firm in 2008, I actually ran a business just like yours.</p>
-        <p>In the early 1990s, I co-managed a vertically integrated cut-and-sew apparel manufacturer right here in Montreal and Toronto. We built it from the ground up, pioneering sales into the massive US retail market.</p>
-        <p>I know firsthand the stress of managing sales, production, operations, and payroll. I understand exactly what entrepreneurs need because I was one. I bring that real-world, pragmatic experience to every tax return and financial statement I prepare for my clients.</p>
-      </div>
-    </div>
-  </section>
 
-  <section class="py-16 px-6 bg-[#070B11] border-y border-white/5 relative z-20">
-    <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-sm fade-up">
-      <div>
-        <h4 class="font-mono text-accent uppercase tracking-widest mb-2 border-b border-white/10 pb-2">Trial Balance</h4>
-        <p class="text-gray-400">Ensures that no posting errors have been made and that your company's accounting equation remains perfectly balanced.</p>
-      </div>
-      <div>
-        <h4 class="font-mono text-accent uppercase tracking-widest mb-2 border-b border-white/10 pb-2">Income Statement</h4>
-        <p class="text-gray-400">A clear, straightforward presentation of your company's revenues minus its expenses for a specific period of time.</p>
-      </div>
-      <div>
-        <h4 class="font-mono text-accent uppercase tracking-widest mb-2 border-b border-white/10 pb-2">Balance Sheet</h4>
-        <p class="text-gray-400">A complete snapshot showing all the assets, liabilities, and the equity of your company at a given point in time.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="py-32 px-6 bg-[#070B11] relative z-20">
+  <section id="services" class="py-32 px-6 bg-[#030303] border-t border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto">
-      <div class="mb-16 fade-up">
-        <h2 class="font-serif text-5xl md:text-6xl font-bold tracking-tight">Simple, clear pricing.</h2>
-        <p class="text-gray-400 mt-4 text-lg">No surprises. Just practical financial management.</p>
+      <div class="mb-20 fade-up">
+        <h2 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter">The Menu</h2>
+        <p class="text-sm text-gray-500 mt-4 uppercase tracking-widest">Card & Cash Accepted</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-8">
-        
-        <div class="glass-panel p-10 fade-up">
-          <div class="mb-8">
-            <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest block mb-2">Year-End Preparation</span>
-            <h3 class="font-serif text-4xl font-bold mb-2">Corporate Tax</h3>
-            <span class="text-2xl font-light text-white">From $1,250</span>
+        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Classic Cut</h3>
+            <span class="text-2xl font-light">$45</span>
           </div>
-          <p class="text-gray-400 leading-relaxed mb-8 font-light">
-            Comprehensive year-end corporate tax services to keep you compliant with the government and prepare you for the next fiscal year.
-          </p>
-          <ul class="space-y-4 font-mono text-xs text-gray-300">
-            <li class="flex gap-3"><span class="text-accent">→</span> Preparation of detailed Financial Statements</li>
-            <li class="flex gap-3"><span class="text-accent">→</span> Full Corporate Income Tax Return filing</li>
-            <li class="flex gap-3"><span class="text-accent">→</span> Practical advice to improve your profitability</li>
-          </ul>
+          <p class="text-gray-400 leading-relaxed mb-8">Standard fade, taper, or scissor cut. Finished with a hot towel and fresh styling.</p>
         </div>
 
-        <div id="bookkeeping" class="glass-panel p-10 fade-up" style="transition-delay: 0.1s;">
-          <div class="mb-8">
-            <span class="font-mono text-[10px] text-gray-500 uppercase tracking-widest block mb-2">Monthly Maintenance</span>
-            <h3 class="font-serif text-4xl font-bold mb-2">Bookkeeping</h3>
-            <span class="text-2xl font-light text-white">From $250 <span class="text-sm text-gray-500">/ mo</span></span>
+        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Cut & Beard</h3>
+            <span class="text-2xl font-light">$65</span>
           </div>
-          <p class="text-gray-400 leading-relaxed mb-8 font-light">
-            It is essential for every business to maintain up-to-date records. Monthly bookkeeping generally takes me about 6 hours per month.
-          </p>
-          
-          <div class="grid grid-cols-2 gap-x-4 gap-y-3 font-mono text-[11px] text-gray-300">
-            <div class="flex gap-2"><span class="text-accent">→</span> General Ledger</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> Bank Reconciliation</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> Monthly Statements</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> GST/QST/HST/PST</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> Payroll Remittances</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> T4 & Relevé 1 Slips</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> Employment Records</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> Dividend Prep</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> CNESST / WSIB</div>
-            <div class="flex gap-2"><span class="text-accent">→</span> REQ Updates</div>
-          </div>
-          
-          <div class="mt-8 pt-6 border-t border-white/10">
-            <p class="font-mono text-xs text-accent">Includes Tax Optimization Analysis (Salaries vs. Dividends)</p>
-          </div>
+          <p class="text-gray-400 leading-relaxed mb-8">The full package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
         </div>
 
+        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Hot Towel Shave</h3>
+            <span class="text-2xl font-light">$40</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-8">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
+        </div>
+
+        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+          <div class="flex justify-between items-start mb-6">
+            <h3 class="font-display text-2xl font-bold uppercase">Line Up</h3>
+            <span class="text-2xl font-light">$25</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed mb-8">Crisp, sharp lines around the perimeter of the hairline and beard to keep you looking fresh between cuts.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="marquee relative z-20">
-    <div class="marquee-track">
-      <span class="marquee-item">Montreal Small Business Accountant •</span>
-      <span class="marquee-item">Small Business Financial Advisor •</span>
-      <span class="marquee-item">Le Plateau-Mont-Royal •</span>
-      <span class="marquee-item">Mile End •</span>
-      <span class="marquee-item">Outremont •</span>
-      <span class="marquee-item">La Petite-Patrie •</span>
-      <span class="marquee-item">Rosemont •</span>
-    </div>
-    <div class="marquee-track" aria-hidden="true">
-      <span class="marquee-item">Montreal Small Business Accountant •</span>
-      <span class="marquee-item">Small Business Financial Advisor •</span>
-      <span class="marquee-item">Le Plateau-Mont-Royal •</span>
-      <span class="marquee-item">Mile End •</span>
-      <span class="marquee-item">Outremont •</span>
-      <span class="marquee-item">La Petite-Patrie •</span>
-      <span class="marquee-item">Rosemont •</span>
-    </div>
-  </div>
+  <section id="reviews" class="py-32 px-6 bg-[#050505] border-t border-white/5 relative z-20">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-20 fade-up">
+        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Client Reviews</h2>
+        <p class="text-gray-400 mt-4 uppercase tracking-widest text-sm">Verified on Google</p>
+      </div>
 
-  <section class="py-32 px-6 bg-[#070B11] relative z-20">
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-panel p-8 fade-up">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Very professional shop. The shop is clean, the atmosphere is great, and they take their time with the cuts. Booking online makes it super easy to get in and out."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
+        
+        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.1s;">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Best fade in Laval. Have been going here for months. Great attention to detail and they always make sure the beard line up is perfectly straight. Highly recommend."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
+        
+        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.2s;">
+          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Finally found a barber who listens. I asked for a specific style and he delivered perfectly. The hot towel at the end is a great touch. Will definitely be returning."</p>
+          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-32 px-6 bg-[#000000] border-t border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
-      <div class="fade-up">
-        <h2 class="font-serif text-5xl md:text-6xl font-bold tracking-tight mb-8">Let's talk business.</h2>
-        <p class="text-lg font-light text-gray-300 max-w-md mb-12 leading-relaxed">
-          Whether you need a complete year-end tax overhaul or just want to offload your monthly bookkeeping, I am here to help.
-        </p>
+      <div class="fade-up text-center lg:text-left">
+        <h2 class="font-display text-[8vw] lg:text-7xl font-bold uppercase tracking-tighter leading-none hover:text-gray-400 transition-colors cursor-pointer">
+          <a href="https://roze.resurva.com/book" target="_blank">Book <br>Now.</a>
+        </h2>
         
-        <div class="space-y-6 font-mono text-sm text-gray-300 mb-12 border-l border-white/10 pl-6">
-          <p><strong class="text-white">Email:</strong> <a href="mailto:stephen@stephenmalouf.com" class="hover:text-accent transition-colors">stephen@stephenmalouf.com</a></p>
-          <p><strong class="text-white">Phone:</strong> <a href="tel:5145865458" class="hover:text-accent transition-colors">(514) 586-5458</a></p>
-          <p class="pt-4 text-gray-400">4127 rue Saint-Christophe<br>Montreal (Quebec) H2L 3Y1</p>
+        <div class="mt-12 space-y-2">
+          <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">4629 Ch. du Souvenir</p>
+          <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">Laval, QC H7W 1C5</p>
         </div>
 
-        <div class="flex gap-4">
-          <a href="mailto:stephen@stephenmalouf.com" class="btn-3d">Send an Email</a>
-          <a href="tel:5145865458" class="btn-outline">Call Now</a>
+        <div class="mt-8 flex gap-6 justify-center lg:justify-start">
+          <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Instagram</a>
+          <a href="https://maps.google.com/?q=4629+Ch.+du+Souvenir,+Laval,+QC" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
         </div>
       </div>
 
       <div class="fade-up" style="transition-delay: 0.2s;">
-        <div class="glass-panel p-2 shadow-2xl relative map-container">
+        <div class="glass-panel p-2 shadow-2xl shadow-black relative group">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.660604177243!2d-73.57726462334812!3d45.516938929944664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a4b1ba0ce3d%3A0xe54e66699eb3cdd2!2s4127%20Rue%20Saint-Christophe%2C%20Montr%C3%A9al%2C%20QC%20H2L%203Y1!5e0!3m2!1sen!2sca!4v1716300000000!5e0!3m2!1sen!2sca" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2793.187383610991!2d-73.76890492334887!3d45.56667952796127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92318cf1b37b5%3A0xc3c5b8bbaafc0a87!2s4629%20Chem.%20du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1715000000000!5m2!1sen!2sca" 
             width="100%" 
-            height="450" 
+            height="400" 
             style="border:0;" 
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade" 
-            class="rounded-md">
+            class="rounded-xl filter grayscale contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100">
           </iframe>
+          <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-gray-800 rounded-full opacity-100 transition-opacity duration-500 group-hover:opacity-0">
+             Hover to interact
+          </div>
         </div>
       </div>
 
     </div>
-  </section>
 
-  <footer class="py-10 px-6 bg-[#030508] border-t border-white/5 relative z-20">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6">
-      <div class="font-serif text-xl font-bold text-white">Stephen Malouf.</div>
-      <p class="font-mono text-[10px] text-gray-500 uppercase tracking-widest">
-        © 2026 Stephen Malouf | Accountant & Tax Advisor
+    <div class="mt-32 text-center fade-up">
+      <p class="text-[10px] text-gray-600 uppercase tracking-[0.2em]">
+        © 2026 ROZE BARBERSHOP. ALL RIGHTS RESERVED.
       </p>
     </div>
-  </footer>
+  </section>
 
   <script>
-    /* ─── PUNCHY & FAST 3D SCROLL MATH ─── */
+    /* ─── FIXED 3D SCROLL MATH ─── */
     const track = document.getElementById('scroll-track');
     const text1 = document.getElementById('layer-text-1');
     const image = document.getElementById('layer-image');
     const text2 = document.getElementById('layer-text-2');
 
     window.addEventListener('scroll', () => {
+      // 1. Calculate scroll progress specifically inside the scroll track
+      // offsetTop tells us where the track starts on the page
+      // offsetHeight is the total height of the track (300vh)
       const trackTop = track.offsetTop;
-      // We subtract the window height so the animation perfectly completes exactly as the user hits the bottom of the track
-      const scrollDistance = track.offsetHeight - window.innerHeight; 
+      const trackHeight = track.offsetHeight;
+      const scrollY = window.scrollY;
       
-      // Calculate progress (0.0 to 1.0)
-      let progress = (window.scrollY - trackTop) / scrollDistance;
+      // Calculate how far down the track we are (0.0 to 1.0)
+      // We subtract window.innerHeight so progress hits 1.0 right as we hit the bottom of the track
+      let progress = (scrollY - trackTop) / (trackHeight - window.innerHeight);
+      
+      // Clamp progress between 0 and 1 so animations don't break if we scroll above or below the track
       progress = Math.max(0, Math.min(1, progress));
 
-      // 1. Text 1 fades out immediately (completed by 30% scroll)
-      let text1Opacity = 1 - (progress * 3.33); 
-      text1.style.opacity = Math.max(0, text1Opacity);
-      text1.style.transform = `translate(-50%, calc(-50% - ${progress * 50}px))`;
+      /* ANIMATION TIMELINE 
+         0.0 - 0.2: Fade out initial text.
+         0.0 - 0.9: Rotate image backward, push it deep, and scale up.
+         0.4 - 1.0: Slide new text up perfectly into the center.
+      */
 
-      // 2. 3D Image Transform (Tilts dramatically back into the void)
-      let imgRotateX = progress * 70; // Hard tilt
-      let imgTranslateZ = progress * -800; // Deep push back
-      let imgScale = 1 + (progress * 0.2); 
-      let imgOpacity = 1 - (progress * 0.8); // Fades down heavily so the text takes over
+      // A) Fade out initial title
+      let text1Opacity = 1 - (progress * 5); 
+      text1.style.opacity = Math.max(0, text1Opacity);
+
+      // B) 3D Image Transform
+      let imgRotateX = progress * 65; // Tilt back 65 degrees
+      let imgTranslateZ = progress * -600; // Push deep into the screen
+      let imgScale = 1 + (progress * 0.4); // Scale up to fill edges
+      let imgOpacity = 1 - (progress * 0.5); // Fade out slightly to make text readable
 
       image.style.transform = `translate(-50%, -50%) rotateX(${imgRotateX}deg) translateZ(${imgTranslateZ}px) scale(${imgScale})`;
       image.style.opacity = imgOpacity;
 
-      // 3. Text 2 Wipes Up into the center (starts at 20% scroll)
-      if (progress > 0.2) {
-        let textProgress = (progress - 0.2) / 0.8;
-        // Starts 50vh below center, moves to exact center
-        let textYOffset = 50 - (textProgress * 50); 
+      // C) Text Wipe Up
+      if (progress > 0.4) {
+        // Normalize progress for the text phase (0.4 to 1.0)
+        let textProgress = (progress - 0.4) / 0.6;
         
-        text2.style.transform = `translate(-50%, calc(-50% + ${textYOffset}vh))`;
-        text2.style.opacity = textProgress * 1.5; 
+        // Starts at 100vh (off screen bottom), moves to -50% (perfectly centered)
+        let textY = 100 - (textProgress * 150); // Move from +100vh down to -50vh offset
+        
+        // We use view height (vh) units for the translateY so it works perfectly on all screen sizes
+        text2.style.transform = `translate(-50%, calc(-50% + ${100 - (textProgress * 100)}vh))`;
+        text2.style.opacity = textProgress * 2; // Fades in
       } else {
+        // Keep it hidden below the screen
         text2.style.transform = `translate(-50%, 100vh)`;
         text2.style.opacity = 0;
       }
