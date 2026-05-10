@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ROZE BARBERSHOP | Laval</title>
-  <meta name="description" content="Premium cuts and shaves in Laval.">
+  <meta name="description" content="Premium cuts and shaves in Laval. Book instantly online.">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💈</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -30,14 +30,12 @@
 
     /* ─── FIXED 3D SCROLL ENGINE (Sticky Method) ─── */
     .scroll-track {
-      /* Gives you room to scroll for the animation to play out */
       height: 300vh;
       width: 100%;
       position: relative;
     }
 
     .sticky-stage {
-      /* Sticks to the screen while you scroll down the track */
       position: sticky;
       top: 0; 
       width: 100%; 
@@ -48,7 +46,7 @@
       align-items: center;
       justify-content: center;
       background: var(--bg);
-      perspective: 1200px; /* 3D depth applied here */
+      perspective: 1200px;
     }
 
     .hero-text-layer {
@@ -65,7 +63,6 @@
       position: absolute;
       top: 50%; left: 50%;
       width: 90vw; max-width: 1200px; height: 60vh;
-      /* Initial state */
       transform: translate(-50%, -50%) rotateX(0deg) translateZ(0px) scale(1);
       transform-origin: center center;
       z-index: 20;
@@ -81,15 +78,75 @@
 
     .scroll-wipe-text {
       position: absolute;
-      /* Using top/left center so we can translate exactly where it goes */
       top: 50%; left: 50%;
       width: 100%;
       text-align: center;
       z-index: 40;
       opacity: 0;
-      /* Start it off-screen at the bottom */
       transform: translate(-50%, 100vh);
       will-change: transform, opacity;
+    }
+
+    /* ─── DUAL SCROLL GUIDES ─── */
+    .scroll-guide {
+      position: absolute;
+      bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 50;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    /* Position them on both sides */
+    .scroll-guide.left { left: 40px; }
+    .scroll-guide.right { right: 40px; }
+
+    .scroll-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      /* Rotate text to fit the vertical space nicely */
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    .scroll-line-container {
+      width: 1px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* The dropping light animation */
+    .scroll-line-container::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, #fff, #fff, transparent);
+      animation: dualScrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes dualScrollDrop {
+      0% { top: -100%; opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Hide on very small screens to avoid UI clutter */
+    @media (max-width: 768px) {
+      .scroll-guide.left { display: none; }
+      .scroll-guide.right { right: 20px; }
     }
 
     /* ─── STANDARD UI ELEMENTS ─── */
@@ -109,6 +166,22 @@
     
     .fade-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .fade-up.active { opacity: 1; transform: translateY(0); }
+
+    /* Resurva Widget Container Styling */
+    .resurva-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff; /* Most booking widgets have white backgrounds */
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .resurva-container iframe {
+      width: 100%;
+      height: 600px; /* Adjust based on Resurva's actual height requirements */
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -116,7 +189,7 @@
   <nav class="fixed w-full top-0 z-50 p-6 mix-blend-difference flex justify-between items-center pointer-events-none">
     <div class="font-display font-bold text-xl tracking-widest text-white">ROZE.</div>
     <div class="pointer-events-auto">
-      <a href="https://roze.resurva.com/book" target="_blank" class="btn-3d py-3 px-6 text-[10px]">Book Now</a>
+      <a href="#booking" class="btn-3d py-3 px-6 text-[10px]">Book Now</a>
     </div>
   </nav>
 
@@ -143,9 +216,17 @@
         </p>
       </div>
 
+      <div class="scroll-guide left">
+        <div class="scroll-line-container"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+      <div class="scroll-guide right">
+        <div class="scroll-line-container"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+
     </div>
   </div>
-
 
   <section id="services" class="py-32 px-6 bg-[#030303] border-t border-white/5 relative z-20">
     <div class="max-w-6xl mx-auto">
@@ -190,31 +271,18 @@
     </div>
   </section>
 
-  <section id="reviews" class="py-32 px-6 bg-[#050505] border-t border-white/5 relative z-20">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-20 fade-up">
-        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Client Reviews</h2>
-        <p class="text-gray-400 mt-4 uppercase tracking-widest text-sm">Verified on Google</p>
+  <section id="booking" class="py-32 px-6 bg-[#050505] border-t border-white/5 relative z-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="mb-16 fade-up">
+        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Secure Your Spot</h2>
+        <p class="text-gray-400 mt-4 text-sm">Select your service and time directly below.</p>
       </div>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass-panel p-8 fade-up">
-          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Very professional shop. The shop is clean, the atmosphere is great, and they take their time with the cuts. Booking online makes it super easy to get in and out."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
-        
-        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.1s;">
-          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Best fade in Laval. Have been going here for months. Great attention to detail and they always make sure the beard line up is perfectly straight. Highly recommend."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
-        
-        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.2s;">
-          <div class="text-yellow-500 mb-4 text-xl tracking-widest">★★★★★</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Finally found a barber who listens. I asked for a specific style and he delivered perfectly. The hot towel at the end is a great touch. Will definitely be returning."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
+      <div class="fade-up resurva-container" style="transition-delay: 0.2s;">
+        <iframe 
+          src="https://roze.resurva.com/book?embed=true" 
+          title="Resurva Booking Widget">
+        </iframe>
       </div>
     </div>
   </section>
@@ -223,25 +291,21 @@
     <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
       
       <div class="fade-up text-center lg:text-left">
-        <h2 class="font-display text-[8vw] lg:text-7xl font-bold uppercase tracking-tighter leading-none hover:text-gray-400 transition-colors cursor-pointer">
-          <a href="https://roze.resurva.com/book" target="_blank">Book <br>Now.</a>
-        </h2>
-        
-        <div class="mt-12 space-y-2">
+        <div class="space-y-2">
           <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">4629 Ch. du Souvenir</p>
           <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">Laval, QC H7W 1C5</p>
         </div>
 
         <div class="mt-8 flex gap-6 justify-center lg:justify-start">
           <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Instagram</a>
-          <a href="https://maps.google.com/?q=4629+Ch.+du+Souvenir,+Laval,+QC" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
+          <a href="https://maps.google.com/maps?q=4629%20Chem.%20du%20Souvenir,%20Laval,%20QC%20H7W%201C5&t=&z=15&ie=UTF8&iwloc=&output=embed" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
         </div>
       </div>
 
       <div class="fade-up" style="transition-delay: 0.2s;">
         <div class="glass-panel p-2 shadow-2xl shadow-black relative group">
           <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2793.187383610991!2d-73.76890492334887!3d45.56667952796127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92318cf1b37b5%3A0xc3c5b8bbaafc0a87!2s4629%20Chem.%20du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1715000000000!5m2!1sen!2sca" 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2793.187383610991!2d-73.76632462334887!3d45.56667952796127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92318cf1b37b5%3A0xc3c5b8bbaafc0a87!2s4629%20Chem.%20du%20Souvenir%2C%20Laval%2C%20QC%20H7W%201C5!5e0!3m2!1sen!2sca!4v1715000000000!5m2!1sen!2sca" 
             width="100%" 
             height="400" 
             style="border:0;" 
@@ -250,9 +314,6 @@
             referrerpolicy="no-referrer-when-downgrade" 
             class="rounded-xl filter grayscale contrast-125 transition-all duration-500 group-hover:grayscale-0 group-hover:contrast-100">
           </iframe>
-          <div class="absolute bottom-6 right-6 pointer-events-none bg-black/80 backdrop-blur text-[10px] uppercase tracking-[0.2em] px-4 py-2 border border-gray-800 rounded-full opacity-100 transition-opacity duration-500 group-hover:opacity-0">
-             Hover to interact
-          </div>
         </div>
       </div>
 
@@ -271,60 +332,47 @@
     const text1 = document.getElementById('layer-text-1');
     const image = document.getElementById('layer-image');
     const text2 = document.getElementById('layer-text-2');
+    const scrollGuides = document.querySelectorAll('.scroll-guide');
 
     window.addEventListener('scroll', () => {
-      // 1. Calculate scroll progress specifically inside the scroll track
-      // offsetTop tells us where the track starts on the page
-      // offsetHeight is the total height of the track (300vh)
       const trackTop = track.offsetTop;
       const trackHeight = track.offsetHeight;
       const scrollY = window.scrollY;
       
-      // Calculate how far down the track we are (0.0 to 1.0)
-      // We subtract window.innerHeight so progress hits 1.0 right as we hit the bottom of the track
       let progress = (scrollY - trackTop) / (trackHeight - window.innerHeight);
-      
-      // Clamp progress between 0 and 1 so animations don't break if we scroll above or below the track
       progress = Math.max(0, Math.min(1, progress));
 
-      /* ANIMATION TIMELINE 
-         0.0 - 0.2: Fade out initial text.
-         0.0 - 0.9: Rotate image backward, push it deep, and scale up.
-         0.4 - 1.0: Slide new text up perfectly into the center.
-      */
+      // Fade out both scroll guides instantly when user starts scrolling
+      scrollGuides.forEach(guide => {
+        guide.style.opacity = Math.max(0, 1 - (progress * 10));
+      });
 
       // A) Fade out initial title
       let text1Opacity = 1 - (progress * 5); 
       text1.style.opacity = Math.max(0, text1Opacity);
 
       // B) 3D Image Transform
-      let imgRotateX = progress * 65; // Tilt back 65 degrees
-      let imgTranslateZ = progress * -600; // Push deep into the screen
-      let imgScale = 1 + (progress * 0.4); // Scale up to fill edges
-      let imgOpacity = 1 - (progress * 0.5); // Fade out slightly to make text readable
+      let imgRotateX = progress * 65; 
+      let imgTranslateZ = progress * -600; 
+      let imgScale = 1 + (progress * 0.4); 
+      let imgOpacity = 1 - (progress * 0.5); 
 
       image.style.transform = `translate(-50%, -50%) rotateX(${imgRotateX}deg) translateZ(${imgTranslateZ}px) scale(${imgScale})`;
       image.style.opacity = imgOpacity;
 
       // C) Text Wipe Up
       if (progress > 0.4) {
-        // Normalize progress for the text phase (0.4 to 1.0)
         let textProgress = (progress - 0.4) / 0.6;
-        
-        // Starts at 100vh (off screen bottom), moves to -50% (perfectly centered)
-        let textY = 100 - (textProgress * 150); // Move from +100vh down to -50vh offset
-        
-        // We use view height (vh) units for the translateY so it works perfectly on all screen sizes
+        let textY = 100 - (textProgress * 150); 
         text2.style.transform = `translate(-50%, calc(-50% + ${100 - (textProgress * 100)}vh))`;
-        text2.style.opacity = textProgress * 2; // Fades in
+        text2.style.opacity = textProgress * 2; 
       } else {
-        // Keep it hidden below the screen
         text2.style.transform = `translate(-50%, 100vh)`;
         text2.style.opacity = 0;
       }
     });
 
-    /* Standard Fade-Up Observer for lower sections */
+    /* Standard Fade-Up Observer */
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
