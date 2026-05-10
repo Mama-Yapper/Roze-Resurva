@@ -23,115 +23,99 @@
       color: var(--text);
       overflow-x: hidden;
       scroll-behavior: smooth;
-      /* Prevent jarring scroll jumps during 3D animations */
-      overscroll-behavior-y: none; 
     }
 
     .font-display { font-family: 'Syncopate', sans-serif; }
-
     ::selection { background-color: var(--text); color: var(--bg); }
 
-    /* ─── APPLE-STYLE SCROLL ENGINE ─── */
-    .viewport-container {
-      /* Creates the 3D stage */
-      perspective: 1000px;
-      transform-style: preserve-3d;
-      height: 300vh; /* The total scroll distance for the animation */
+    /* ─── FIXED 3D SCROLL ENGINE (No Sticky Conflicts) ─── */
+    .scroll-trigger-area {
+      /* This invisible div defines how long the scroll animation lasts (3 viewports) */
+      height: 300vh;
+      width: 100%;
       position: relative;
     }
 
-    .sticky-stage {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100%;
+    .fixed-viewport {
+      /* This locks to the screen while you scroll through the trigger area */
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background: var(--bg);
+      z-index: 10; /* Sits behind the rest of the page when scrolled past */
+      perspective: 1000px; /* Applies 3D depth */
     }
 
-    /* The Hero Text that stays fixed */
+    /* Spacer to push content down below the fixed viewport */
+    .content-spacer {
+      height: 300vh;
+      width: 100%;
+      position: relative;
+      z-index: 5;
+    }
+
     .hero-text-layer {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       z-index: 30;
       text-align: center;
       width: 100%;
-      pointer-events: none; /* Let clicks pass through to buttons if needed */
     }
 
-    /* The 3D Image that will rotate on scroll */
     .hero-3d-image {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 90vw;
-      max-width: 1200px;
-      height: 60vh;
-      /* Initial State: Flat and centered */
+      top: 50%; left: 50%;
+      width: 90vw; max-width: 1200px; height: 60vh;
       transform: translate(-50%, -50%) rotateX(0deg) translateZ(0px) scale(1);
       transform-origin: center center;
       z-index: 20;
       border-radius: 24px;
       overflow: hidden;
       will-change: transform, opacity;
-      /* Very fast transition to smooth the JS updates */
-      transition: transform 0.1s linear, opacity 0.1s linear;
       box-shadow: 0 40px 100px rgba(0,0,0,0.9);
     }
     
     .hero-3d-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(20%) contrast(1.1);
+      width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.1);
     }
 
-    /* The text that wipes UP as the image rotates back */
     .scroll-wipe-text {
       position: absolute;
-      bottom: -100px; /* Start hidden below the screen */
+      bottom: -150px; /* Start well below the screen */
       width: 100%;
       text-align: center;
       z-index: 40;
       opacity: 0;
-      transition: transform 0.1s linear, opacity 0.1s linear;
       will-change: transform, opacity;
+    }
+
+    /* Ensure content below the scroll sequence overlaps the fixed viewport */
+    .page-content {
+      position: relative;
+      z-index: 20; /* Higher than fixed-viewport */
+      background: var(--bg);
     }
 
     /* ─── STANDARD UI ELEMENTS ─── */
     .btn-3d {
-      background: var(--text);
-      color: var(--bg);
-      padding: 16px 40px;
-      border-radius: 100px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 12px;
+      background: var(--text); color: var(--bg);
+      padding: 16px 40px; border-radius: 100px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px;
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-block;
-      pointer-events: auto; /* Re-enable clicks */
     }
-    .btn-3d:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 20px 40px rgba(255,255,255,0.2);
-    }
+    .btn-3d:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 20px 40px rgba(255,255,255,0.2); }
 
     .glass-panel {
-      background: rgba(20, 20, 20, 0.5);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 20px;
+      background: rgba(20, 20, 20, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
     }
     
-    /* Fade in for standard sections */
     .fade-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .fade-up.active { opacity: 1; transform: translateY(0); }
   </style>
@@ -145,188 +129,189 @@
     </div>
   </nav>
 
-  <div class="viewport-container" id="scroll-sequence">
-    <div class="sticky-stage">
-      
-      <div class="hero-text-layer" id="layer-text-1">
-        <h1 class="font-display text-[12vw] md:text-[8vw] font-bold leading-none tracking-tighter uppercase text-white drop-shadow-2xl">
-          Precision.
-        </h1>
-      </div>
+  <div class="scroll-trigger-area" id="scroll-track"></div>
 
-      <div class="hero-3d-image" id="layer-image">
-        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1600&q=80" alt="Roze Barbershop Studio">
-        
-        <div class="absolute inset-0 bg-black/40"></div>
-      </div>
-
-      <div class="scroll-wipe-text" id="layer-text-2">
-        <h2 class="font-display text-4xl md:text-7xl font-bold uppercase tracking-tighter leading-tight text-white drop-shadow-2xl">
-          More than <br>a haircut.
-        </h2>
-        <p class="mt-6 text-xl text-gray-400 max-w-lg mx-auto font-light px-4">
-          Laval's dedicated grooming studio. Clean lines, hot towels, and an atmosphere built for the modern gentleman.
-        </p>
-      </div>
-
-    </div>
-  </div>
-
-
-  <section id="services" class="py-32 px-6 bg-[#030303] relative z-20 border-t border-white/5">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-20 fade-up">
-        <h2 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter">The Menu</h2>
-        <p class="text-sm text-gray-500 mt-4 uppercase tracking-widest">Card & Cash Accepted</p>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
-          <div class="flex justify-between items-start mb-6">
-            <h3 class="font-display text-2xl font-bold uppercase">Classic Cut</h3>
-            <span class="text-2xl font-light">$45</span>
-          </div>
-          <p class="text-gray-400 leading-relaxed mb-8">Standard fade, taper, or scissor cut. Finished with a hot towel and fresh styling.</p>
-        </div>
-
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
-          <div class="flex justify-between items-start mb-6">
-            <h3 class="font-display text-2xl font-bold uppercase">Cut & Beard</h3>
-            <span class="text-2xl font-light">$65</span>
-          </div>
-          <p class="text-gray-400 leading-relaxed mb-8">The full package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
-        </div>
-
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
-          <div class="flex justify-between items-start mb-6">
-            <h3 class="font-display text-2xl font-bold uppercase">Hot Towel Shave</h3>
-            <span class="text-2xl font-light">$40</span>
-          </div>
-          <p class="text-gray-400 leading-relaxed mb-8">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
-        </div>
-
-        <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
-          <div class="flex justify-between items-start mb-6">
-            <h3 class="font-display text-2xl font-bold uppercase">Line Up</h3>
-            <span class="text-2xl font-light">$25</span>
-          </div>
-          <p class="text-gray-400 leading-relaxed mb-8">Crisp, sharp lines around the perimeter of the hairline and beard to keep you looking fresh between cuts.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section id="reviews" class="py-32 px-6 bg-[#050505] border-t border-white/5">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-20 fade-up">
-        <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Client Reviews</h2>
-        <p class="text-gray-400 mt-4 uppercase tracking-widest text-sm">Verified on Google</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        
-        <div class="glass-panel p-8 fade-up">
-          <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Very professional shop. The shop is clean, the atmosphere is great, and they take their time with the cuts. Booking online makes it super easy to get in and out."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
-        
-        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.1s;">
-          <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Best fade in Laval. Have been going here for months. Great attention to detail and they always make sure the beard line up is perfectly straight. Highly recommend."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
-        
-        <div class="glass-panel p-8 fade-up" style="transition-delay: 0.2s;">
-          <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
-          <p class="text-gray-300 text-sm leading-relaxed mb-6">"Finally found a barber who listens. I asked for a specific style and he delivered perfectly. The hot towel at the end is a great touch. Will definitely be returning."</p>
-          <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="py-32 px-6 bg-[#000000] border-t border-white/5 flex flex-col items-center justify-center text-center relative">
+  <div class="fixed-viewport" id="viewport-stage">
     
-    <div class="z-10 fade-up">
-      <h2 class="font-display text-[10vw] font-bold uppercase tracking-tighter leading-none hover:text-gray-400 transition-colors cursor-pointer">
-        <a href="https://roze.resurva.com/book" target="_blank">Book Now.</a>
+    <div class="hero-text-layer" id="layer-text-1">
+      <h1 class="font-display text-[12vw] md:text-[8vw] font-bold leading-none tracking-tighter uppercase text-white drop-shadow-2xl">
+        Precision.
+      </h1>
+    </div>
+
+    <div class="hero-3d-image" id="layer-image">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1600&q=80" alt="Roze Barbershop Studio">
+      <div class="absolute inset-0 bg-black/40"></div>
+    </div>
+
+    <div class="scroll-wipe-text" id="layer-text-2">
+      <h2 class="font-display text-4xl md:text-7xl font-bold uppercase tracking-tighter leading-tight text-white drop-shadow-2xl">
+        More than <br>a haircut.
       </h2>
-      
-      <div class="mt-16 space-y-2">
-        <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">4629 Ch. du Souvenir</p>
-        <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">Laval, QC H7W 1C5</p>
-      </div>
-
-      <div class="mt-12 flex gap-6 justify-center">
-        <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Instagram</a>
-        <a href="https://maps.google.com/?q=4629+Chem.+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
-      </div>
-
-      <p class="mt-24 text-[10px] text-gray-600 uppercase tracking-[0.2em]">
-        © 2026 ROZE BARBERSHOP | DESIGNED BY NETSITES
+      <p class="mt-6 text-xl text-gray-400 max-w-lg mx-auto font-light px-4 pb-20">
+        Laval's dedicated grooming studio. Clean lines, hot towels, and an atmosphere built for the modern gentleman.
       </p>
     </div>
 
-  </section>
+  </div>
+
+
+  <div class="page-content">
+    
+    <section id="services" class="py-32 px-6 bg-[#030303] border-t border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-20 fade-up">
+          <h2 class="font-display text-4xl md:text-6xl font-bold uppercase tracking-tighter">The Menu</h2>
+          <p class="text-sm text-gray-500 mt-4 uppercase tracking-widest">Card & Cash Accepted</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="font-display text-2xl font-bold uppercase">Classic Cut</h3>
+              <span class="text-2xl font-light">$45</span>
+            </div>
+            <p class="text-gray-400 leading-relaxed mb-8">Standard fade, taper, or scissor cut. Finished with a hot towel and fresh styling.</p>
+          </div>
+
+          <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="font-display text-2xl font-bold uppercase">Cut & Beard</h3>
+              <span class="text-2xl font-light">$65</span>
+            </div>
+            <p class="text-gray-400 leading-relaxed mb-8">The full package. Precision haircut paired with a detailed beard sculpting and straight razor line-up.</p>
+          </div>
+
+          <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="font-display text-2xl font-bold uppercase">Hot Towel Shave</h3>
+              <span class="text-2xl font-light">$40</span>
+            </div>
+            <p class="text-gray-400 leading-relaxed mb-8">Traditional straight razor shave. Pre-shave oil, hot steam towels, rich lather, and a cold towel finish.</p>
+          </div>
+
+          <div class="glass-panel p-10 hover:border-white/20 transition-colors group fade-up" style="transition-delay: 0.1s;">
+            <div class="flex justify-between items-start mb-6">
+              <h3 class="font-display text-2xl font-bold uppercase">Line Up</h3>
+              <span class="text-2xl font-light">$25</span>
+            </div>
+            <p class="text-gray-400 leading-relaxed mb-8">Crisp, sharp lines around the perimeter of the hairline and beard to keep you looking fresh between cuts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="py-32 px-6 bg-[#050505] border-t border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-20 fade-up">
+          <h2 class="font-display text-4xl md:text-5xl uppercase font-bold tracking-tighter">Client Reviews</h2>
+          <p class="text-gray-400 mt-4 uppercase tracking-widest text-sm">Verified on Google</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-panel p-8 fade-up">
+            <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6">"Very professional shop. The shop is clean, the atmosphere is great, and they take their time with the cuts. Booking online makes it super easy to get in and out."</p>
+            <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+          </div>
+          
+          <div class="glass-panel p-8 fade-up" style="transition-delay: 0.1s;">
+            <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6">"Best fade in Laval. Have been going here for months. Great attention to detail and they always make sure the beard line up is perfectly straight. Highly recommend."</p>
+            <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+          </div>
+          
+          <div class="glass-panel p-8 fade-up" style="transition-delay: 0.2s;">
+            <div class="text-white mb-4 text-xs tracking-[0.2em] font-bold">5.0 STARS</div>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6">"Finally found a barber who listens. I asked for a specific style and he delivered perfectly. The hot towel at the end is a great touch. Will definitely be returning."</p>
+            <p class="text-xs text-gray-500 font-bold uppercase">— Google Reviewer</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-32 px-6 bg-[#000000] border-t border-white/5 flex flex-col items-center justify-center text-center relative">
+      <div class="z-10 fade-up">
+        <h2 class="font-display text-[10vw] font-bold uppercase tracking-tighter leading-none hover:text-gray-400 transition-colors cursor-pointer">
+          <a href="https://roze.resurva.com/book" target="_blank">Book Now.</a>
+        </h2>
+        
+        <div class="mt-16 space-y-2">
+          <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">4629 Ch. du Souvenir</p>
+          <p class="text-sm text-gray-400 uppercase tracking-[0.3em] font-bold">Laval, QC H7W 1C5</p>
+        </div>
+
+        <div class="mt-12 flex gap-6 justify-center">
+          <a href="https://www.instagram.com/thelifeofroze/" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Instagram</a>
+          <a href="https://maps.google.com/?q=4629+Chem.+du+Souvenir,+Laval,+QC+H7W+1C5" target="_blank" class="text-xs text-white uppercase tracking-widest border-b border-white/20 hover:border-white pb-1 transition-colors">Get Directions</a>
+        </div>
+
+        <p class="mt-24 text-[10px] text-gray-600 uppercase tracking-[0.2em]">
+          © 2026 ROZE BARBERSHOP. ALL RIGHTS RESERVED.
+        </p>
+      </div>
+    </section>
+  </div>
 
   <script>
-    /* ─── APPLE-STYLE SCROLL MATH ─── */
-    const sequence = document.getElementById('scroll-sequence');
+    /* ─── FIXED 3D SCROLL MATH ─── */
+    const track = document.getElementById('scroll-track');
+    const viewport = document.getElementById('viewport-stage');
     const text1 = document.getElementById('layer-text-1');
     const image = document.getElementById('layer-image');
     const text2 = document.getElementById('layer-text-2');
 
     window.addEventListener('scroll', () => {
-      // Get the bounding box of the sequence container
-      const rect = sequence.getBoundingClientRect();
+      // 1. Calculate how far the user has scrolled down the page
+      let scrollY = window.scrollY;
+      let trackHeight = track.offsetHeight - window.innerHeight;
       
-      // Calculate scroll progress from 0 to 1 inside the 300vh wrapper
-      // rect.top goes from 0 (at the very top) down to a negative number as we scroll past it.
-      // We divide by (height - windowHeight) to get a clean 0 to 1 percentage.
-      let progress = (0 - rect.top) / (rect.height - window.innerHeight);
-      
-      // Clamp progress between 0 and 1 so animations stop when we leave the section
+      // Calculate progress percentage (0.0 to 1.0)
+      let progress = scrollY / trackHeight;
       progress = Math.max(0, Math.min(1, progress));
 
-      /* ANIMATION TIMING (0.0 to 1.0)
+      /* ANIMATION TIMELINE 
          0.0 - 0.2: Fade out initial text.
-         0.1 - 0.6: Image falls back into 3D space (rotateX) and scales up slightly.
-         0.5 - 0.9: New text slides up from the bottom.
+         0.0 - 0.8: Rotate image backward and scale up.
+         0.4 - 0.9: Slide new text up from bottom.
       */
 
-      // 1. Initial Text Fade
-      let text1Opacity = 1 - (progress * 5); // Fades out completely by 20% progress
+      // A) Fade out initial title
+      let text1Opacity = 1 - (progress * 5); 
       text1.style.opacity = Math.max(0, text1Opacity);
 
-      // 2. The 3D Image Rotation
-      // We want it to tilt backwards (rotateX) up to 60 degrees.
-      // We also push it "back" in Z-space so it looks deep.
-      let imgRotateX = progress * 60; // Max 60deg tilt
-      let imgTranslateZ = progress * -500; // Pushes back 500px
-      let imgScale = 1 + (progress * 0.5); // Grows 50% larger to fill screen as it tilts
-      let imgOpacity = 1 - (progress * 0.5); // Fades out slightly so text pops
+      // B) 3D Image Transform
+      let imgRotateX = progress * 65; // Tilt back 65 degrees
+      let imgTranslateZ = progress * -600; // Push deep into the screen
+      let imgScale = 1 + (progress * 0.4); // Scale up to fill edges
+      let imgOpacity = 1 - (progress * 0.4); // Fade out slightly
 
       image.style.transform = `translate(-50%, -50%) perspective(1000px) rotateX(${imgRotateX}deg) translateZ(${imgTranslateZ}px) scale(${imgScale})`;
       image.style.opacity = imgOpacity;
 
-      // 3. The Wipe Text
-      // It starts low (translateY = 200px) and moves to center (translateY = -50%)
-      if (progress > 0.3) {
-        // Normalize progress for the text phase (0.3 to 1.0)
-        let textProgress = (progress - 0.3) / 0.7;
+      // C) Text Wipe Up
+      if (progress > 0.4) {
+        // Normalize progress for the text phase (0.4 to 1.0)
+        let textProgress = (progress - 0.4) / 0.6;
         
-        let textY = 100 - (textProgress * 150); // Moves up
-        let textOpacity = textProgress * 2; // Fades in fast
+        let textY = 150 - (textProgress * 150); // Move from 150px below center up to center (0px offset)
+        let textOpacity = textProgress * 2; // Fade in fast
         
         text2.style.transform = `translateY(${textY}px)`;
         text2.style.opacity = Math.min(1, textOpacity);
       } else {
-        text2.style.transform = `translateY(100px)`;
+        text2.style.transform = `translateY(150px)`;
         text2.style.opacity = 0;
+      }
+
+      // D) Release the Viewport
+      // When the user scrolls past the track, unlock the viewport so the rest of the page scrolls over it smoothly.
+      if (progress >= 1) {
+        viewport.style.position = 'absolute';
+        viewport.style.top = `${trackHeight}px`; // Pin it to the bottom of the track
+      } else {
+        viewport.style.position = 'fixed';
+        viewport.style.top = '0';
       }
     });
 
